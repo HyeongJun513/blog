@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <div className="App" style={{fontSize: 25}}>
-        <BrowserRouter>
+        <BrowserRouter basename='/blog'>
           <Routes>
             <Route 
             path='/'
