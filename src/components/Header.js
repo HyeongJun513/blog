@@ -16,7 +16,7 @@ const Header = () => {
                 {/* <p style={{marginRight:5}}>Home</p>
                 <p style={{marginLeft:5}}>Portfolio</p> */}
                 <MenuButton onClick={() => {alert('홈 버튼 클릭!')}}>Home</MenuButton>
-                <MenuButton onClick={() => {alert('포트폴리오오 버튼 클릭!')}}>Portfolio</MenuButton>
+                <MenuButton onClick={() => {alert('포트폴리오 버튼 클릭!')}}>Portfolio</MenuButton>
             </div>
         </div>
         <hr style={{marginTop: -20}}/>

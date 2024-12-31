@@ -7,76 +7,98 @@ import Header from './components/Header';
 import Test from './components/test';
 import Test2 from './components/test2';
 import ErrorPage from './components/ErrorPage';
-import RightMenu from './components/right_menu/RightMenu';
+import RightMenu from './components/side_menu/SideMenu';
+import List from './components/firebase/List';
+import Post from './components/firebase/Post';
+import Login from './components/firebase/Login';
+import SignUp from './components/firebase/SignUp';
+import Detail from './components/firebase/Detail';
+import Edit from './components/firebase/Edit';
+import { AuthProvider } from './components/firebase/AuthContext ';
+
+// 공통 레이아웃 컴포넌트
+const Layout = ({ children }) => {
+  return (
+    <Container>
+      <div style={{ width: '80%' }}>
+        <Header />
+        <div style={{ display: 'flex', backgroundColor: 'white', justifyContent: 'center' }}>
+          <div style={{ flex: 2 }}>
+            <RightMenu />
+          </div>
+
+          <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 5, marginRight: 5 }} />
+
+          <div style={{ flex: 8 }}>
+            {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
+          </div>
+        </div>
+      </div>
+    </Container>
+  );
+};
 
 const App = () => {
 
   return (
     <div style={{fontSize: 25, textAlign: 'center'}}>
+      <AuthProvider>
         <BrowserRouter basename='/blog'>
           <Routes>
             <Route 
             path='/'
             element={
-              <Container>
-                <div style={{width:'80%'}}>
-                  <Header />
-                  <div style={{display:'flex', backgroundColor:'white', justifyContent:'center'}}>
-                    <div style={{flex: 2}}>
-                      <RightMenu />
-                    </div>
-
-                    <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft:5, marginRight: 5}} />
-
-                    <div style={{flex: 8}}>
-                      <Home />
-                    </div>
-                  </div>
-                </div>
-              </Container>
+              <Layout>
+                <Home />
+              </Layout>
             }
             />
+            <Route path='post' element={ //게시글 작성
+                <Layout>
+                  <Post />
+                </Layout>
+            }/>
+            <Route path='list' element={ //게시글 목록
+                <Layout>
+                  <List />
+                </Layout>
+            }/>
+            <Route path="list/:id" element={ //게시글 조회
+                <Layout>
+                  <Detail />
+                </Layout>
+            }/>
+            <Route path="edit/:id" element={ //게시글 수정
+                <Layout>
+                  <Edit />
+              </Layout>
+            }/>
+            <Route path='signup' element={ //회원가입
+                <Layout>
+                  <SignUp />
+                </Layout>
+            }/>
+            <Route path='login' element={ //로그인 및 로그아웃
+                <Layout>
+                  <Login />
+                </Layout>
+            }/>
             <Route path='test1' element={
-              <Container>
-                <div style={{width:'80%'}}>
-                  <Header />
-                  <div style={{display:'flex', backgroundColor:'white', justifyContent:'center'}}>
-                    <div style={{flex: 2}}>
-                      <RightMenu />
-                    </div>
-
-                    <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft:5, marginRight: 5}} />
-                    
-                    <div style={{flex: 8}}>
-                      <Test />
-                    </div>
-                  </div>
-                </div>
-              </Container>
+                <Layout>
+                  <Test />
+                </Layout>
             }/>
             <Route path='test2' element={
-              <Container>
-              <div style={{width:'80%'}}>
-                <Header />
-                <div style={{display:'flex', backgroundColor:'white', justifyContent:'center'}}>
-                  <div style={{flex: 2}}>
-                    <RightMenu />
-                  </div>
-
-                  <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft:5, marginRight: 5}} />
-                  
-                  <div style={{flex: 8}}>
-                    <Test2 />
-                  </div>
-                </div>
-              </div>
-            </Container>
+                <Layout>
+                  <Test2 />
+                </Layout>
             }/>
-            <Route path='*' element={
+            <Route path='*' element={ //경로가 잘못된 경우 에러페이지 출력
               <ErrorPage />
             } />
           </Routes>
         </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 };
