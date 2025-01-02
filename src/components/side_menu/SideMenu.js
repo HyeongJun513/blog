@@ -24,7 +24,7 @@ const SideMenu = () => {
     const PrintButton = () => {
         if (!currentUser) { //로그아웃 상태인 경우
             return <SideButton onClick={() => {navigate('/login')}}>로그인</SideButton>
-        } else if (currentUser) { //로그인 상태인 경우우
+        } else if (currentUser) { //로그인 상태인 경우
             return (
                 <div>
                     <SideButton onClick={() => {navigate('/post')}}>게시글 작성</SideButton>
@@ -37,7 +37,7 @@ const SideMenu = () => {
     };
 
     return (
-        <div style={{backgroundColor:'lightgray'}}>
+        <div style={{backgroundColor:'lightgray', marginTop: 15}}>
             {/* <p style={{fontWeight:'bold', color:'white'}}>좌측 메뉴 (RightMenu.js)</p> */}
             <Profile />
             <PrintButton />

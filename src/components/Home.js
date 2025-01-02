@@ -33,14 +33,14 @@ const Home = () => {
     return (
         <div style={{backgroundColor:'white', }}>
             <p>게시글 목록 출력 (Home.js)</p>
-            {/* <h3>할일 목록(1228 작성)</h3>
+            <h3>할일 목록(1230 수정)</h3>
             <p>
                 게시글 첨부파일 이미지 각각 따로, 첨부파일 여러개 받기, 
                 <br />
                 게시글 사진과 글 같이 쓰는 기능(HTML), 우상단 Home과 Portfolio 구분,
                 <br />
                 댓글 입력 기능(닉네임, 내용, 비밀번호) 등등 추가하기
-            </p> */}
+            </p>
             <div style={{flexDirection:'row'}}>
                 <NumberButton onClick={NumberPlus} > 숫자 + </NumberButton>
                 <NumberButton onClick={NumberMinus} > 숫자 - </NumberButton>

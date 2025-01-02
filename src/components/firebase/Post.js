@@ -78,10 +78,10 @@ const Post = () => {
           <label>
             분류:
             <select value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="general">일반</option>
-              <option value="react">React</option>
-              <option value="react-native">React Native</option>
-              <option value="another">기타</option>
+              <option value="일반">일반</option>
+              <option value="React">React</option>
+              <option value="React-Native">React Native</option>
+              <option value="기타">기타</option>
             </select>
           </label>
         </div>

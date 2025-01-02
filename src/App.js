@@ -3,17 +3,19 @@ import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-do
 import './App.css';
 import styled from 'styled-components';
 import Home from './components/Home';
-import Header from './components/Header';
+import Header from './components/Head/Header';
 import Test from './components/test';
 import Test2 from './components/test2';
 import ErrorPage from './components/ErrorPage';
-import RightMenu from './components/side_menu/SideMenu';
+import SideMenu from './components/side_menu/SideMenu';
 import List from './components/firebase/List';
 import Post from './components/firebase/Post';
 import Login from './components/firebase/Login';
 import SignUp from './components/firebase/SignUp';
 import Detail from './components/firebase/Detail';
 import Edit from './components/firebase/Edit';
+import PortfolioHome from './components/Portfolio/PortfolioHome';
+
 import { AuthProvider } from './components/firebase/AuthContext ';
 
 // 공통 레이아웃 컴포넌트
@@ -24,10 +26,10 @@ const Layout = ({ children }) => {
         <Header />
         <div style={{ display: 'flex', backgroundColor: 'white', justifyContent: 'center' }}>
           <div style={{ flex: 2 }}>
-            <RightMenu />
+            <SideMenu />
           </div>
 
-          <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 5, marginRight: 5 }} />
+          <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 10, marginRight: 10 }} />
 
           <div style={{ flex: 8 }}>
             {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
@@ -49,7 +51,8 @@ const App = () => {
             path='/'
             element={
               <Layout>
-                <Home />
+                {/* <Home /> */}
+                <List />
               </Layout>
             }
             />
@@ -81,6 +84,11 @@ const App = () => {
             <Route path='login' element={ //로그인 및 로그아웃
                 <Layout>
                   <Login />
+                </Layout>
+            }/>
+            <Route path='portfolio' element={
+                <Layout>
+                  <PortfolioHome />
                 </Layout>
             }/>
             <Route path='test1' element={
