@@ -7,7 +7,7 @@ import { AuthContext } from "./AuthContext ";
 const Post = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("general");
+  const [category, setCategory] = useState("일반");
   const [file, setFile] = useState(null);
 
   const { currentUser } = useContext(AuthContext); // 현재 사용자 정보 가져오기

@@ -35,7 +35,7 @@ const Category = () => {
   
         setPostCounts(counts);
       });
-  
+
       return () => unsubscribe();
     }, []);
 

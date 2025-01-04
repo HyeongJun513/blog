@@ -29,11 +29,11 @@ const List = () => {
 
   const printListHeader = () =>{
     const Description = () =>{
-      if (category == '전체') return <DescriptionText>전체 게시글에 대한 설명입니다.</DescriptionText> 
-      else if (category == '일반') return <DescriptionText>일반 게시글에 대한 설명입니다.</DescriptionText> 
-      else if (category == 'React') return <DescriptionText>React 게시글에 대한 설명입니다.</DescriptionText> 
-      else if (category == 'React-Native') return <DescriptionText>RN 게시글에 대한 설명입니다.</DescriptionText> 
-      else return <DescriptionText>기타 게시글에 대한 설명입니다.</DescriptionText>
+      if (category == '전체') return <DescriptionText>전체 게시글 한눈에 보기</DescriptionText> 
+      else if (category == '일반') return <DescriptionText>일반적인 이모저모</DescriptionText> 
+      else if (category == 'React') return <DescriptionText>React 공부 및 프로젝트</DescriptionText> 
+      else if (category == 'React-Native') return <DescriptionText>RN 공부 및 프로젝트</DescriptionText> 
+      else return <DescriptionText>기타</DescriptionText>
     };
 
     return (
@@ -71,6 +71,7 @@ const List = () => {
   return (
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       {printListHeader()}
+
       {posts.map((post) => (
         <div key={post.id} style={{width:'90%'}}>
             {/* <Link to={`/post/${post.id}`}> */}
@@ -83,6 +84,7 @@ const List = () => {
           }
         </div>
       ))}
+
     </div>
   );
 };
@@ -120,7 +122,7 @@ const CategoryText = styled.div`
 const DescriptionText = styled.div`
   background-color: lightgray;
   color: gray; 
-  width: 100%; 
+  width: calc(100% - 1.4rem); 
   text-align: left;
   padding: 0.7rem;
 

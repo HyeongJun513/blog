@@ -129,7 +129,7 @@ const Edit = () => {
       </form>
       :
       <div>
-        <h3 style={{color: 'red'}}>! 게시글 작성에는 로그인이 필요합니다 !</h3>
+        <h3 style={{color: 'red'}}>! 게시글 수정에는 로그인이 필요합니다 !</h3>
       </div>
       }
     </div>
