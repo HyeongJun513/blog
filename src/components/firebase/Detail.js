@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, set, push, remove } from "firebase/database";
 import { getStorage, ref as storageRef, deleteObject } from "firebase/storage";
 import { AuthContext } from "./AuthContext ";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 
 const Detail = () => {
@@ -148,7 +150,10 @@ const Detail = () => {
         <hr />
 
         {/* 게시글 내용 */}
-        <PostContent>{post.content}</PostContent>
+        {/* <PostContent>{post.content}</PostContent> */}
+        <PostContent>
+          <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} />
+        </PostContent>
         {post.fileURL && (
           <div>
             <a href={post.fileURL} target="_blank" rel="noopener noreferrer">
@@ -223,6 +228,12 @@ const Detail = () => {
           </CommentWriteContainer>
 
         </div>
+
+      {/* <div>
+        <h3>미리보기</h3>
+        <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} />
+      </div> */}
+
       </div>
   );
 };
@@ -346,7 +357,7 @@ const CommentWriteContainer = styled.div`
 const NicknameInput = styled.input`
   font-size: 1rem;
   color: #222222;
-  width: 300px;
+  width: 10rem;
   border: none;
   border-bottom: solid #aaaaaa 1px;
   padding-bottom: 0.2rem;

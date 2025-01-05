@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import styled from "styled-components";
+import { marked } from "marked"; //markdown을 html 방식으로 변환하는 모듈
 
 const List = () => {
   const [posts, setPosts] = useState([]);
@@ -23,7 +26,7 @@ const List = () => {
       setPosts(postsArray.reverse()); //데이터 역순 (최신 데이터 위로, 과거 데이터 아래로로)
     });
 
-    // Clean up subscription
+    
     return () => unsubscribe();
   }, []);
 
@@ -47,6 +50,16 @@ const List = () => {
   };
 
   const printList = (post) => {
+    const stripMarkdown = (markdown) => { //미리보기에 마크다운 코드 제거 함수
+      const html = marked.parse(markdown); //Markdown 텍스트를 HTML 문자열로 변환
+      const tempDiv = document.createElement("div"); //임시 div엘리먼트 생성.
+      tempDiv.innerHTML = html; //임시 div 엘리먼트 내부에 변환된 HTML 삽입
+      return tempDiv.textContent || tempDiv.innerText || ""; //임시 div 엘리먼트 내부에 존재하는 텍스트만 추출 //textContent가 작동하지 않는 브라우저인 경우 innerText 사용, 그도 안되면 그냥 공백값 반환
+    }; //textContent: HTML 태그를 무시하고 모든 텍스트를 반환. //innerText: 화면에 보이는 텍스트만 반환 (<h4 style="display:none">숨겨진 제목</h4> 인 경우 반환하지 않음).
+    
+    const previewText = stripMarkdown(post.content);
+
+
     return (
       <div style={{display:'flex', flexDirection:'column'}}>
 
@@ -55,7 +68,7 @@ const List = () => {
         </ListButton>
 
         <Content>
-          <p style={{ margin: 0, fontSize: '1rem' }}>{post.content}</p>
+          <p style={{ margin: 0, fontSize: '1rem' }}>{previewText}</p>
         </Content>
 
         <Tail style={{ fontSize:'0.9rem' }}>

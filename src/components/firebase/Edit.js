@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, update } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage";
 import { AuthContext } from "./AuthContext ";
+import styled from "styled-components";
 
 const Edit = () => {
   const { id } = useParams();
@@ -78,54 +79,53 @@ const Edit = () => {
   }
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-      <h1>게시글 수정</h1>
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+      <Title>게시글 수정</Title>
+      <hr style={{width:'90%'}}/>
       {currentUser ?
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            제목:
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            내용:
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            분류:
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="일반">일반</option>
-              <option value="React">React</option>
-              <option value="React-Native">React Native</option>
-              <option value="기타">기타</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label>
-            파일 첨부 (새 파일을 선택하면 기존 파일이 삭제됩니다.):
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-          </label>
-        </div>
+      <form onSubmit={handleSubmit} style={{width:'90%'}}>
+
+        <CustomDiv>
+          <SmallTitle>카테고리</SmallTitle>
+          <CategorySelect value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="일반">일반</option>
+            <option value="React">React</option>
+            <option value="React-Native">React Native</option>
+            <option value="기타">기타</option>
+          </CategorySelect>
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>제목</SmallTitle>
+          <TitleInput
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </CustomDiv>
+        
+        <CustomDiv>
+          <SmallTitle>내용</SmallTitle>
+          <ContentTextArea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>파일첨부</SmallTitle>
+          <FileInput type="file" onChange={(e) => setFile(e.target.files[0])} />
+        </CustomDiv>
         {post.fileURL && (
           <div>
             <p>현재 파일: <a href={post.fileURL} target="_blank" rel="noopener noreferrer">첨부파일 보기</a></p>
           </div>
         )}
-        <button type="submit">수정 완료</button>
+        <CustomDiv style={{alignItems:'flex-end'}}>
+          <PostButton type="submit">게시글 수정</PostButton>
+        </CustomDiv>
       </form>
       :
       <div>
@@ -137,3 +137,73 @@ const Edit = () => {
 };
 
 export default Edit;
+
+const CustomDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const CategorySelect = styled.select`
+  margin: 0.5rem 0 0 0.5rem;
+  width: 10rem;
+  height: 1.5rem;
+`;
+
+const Title = styled.p`
+  font-family: "Yeon Sung", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2.5rem;
+  margin: 1rem 0 0.5rem 0;
+`;
+
+const SmallTitle = styled.p`
+  font-family: "Yeon Sung", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5rem;
+  margin: 1rem 0 0 0.5rem;
+`;
+
+const TitleInput = styled.input`
+  margin: 0.5rem 0 0 0.5rem;
+  width: calc(100% - 1.5rem);
+  height: 1.5rem;
+  // background-color: lightgray;
+`;
+
+const ContentTextArea = styled.textarea`
+  resize: none;
+  margin: 0.5rem 0 0 0.5rem;
+  width: calc(100% - 1.5rem);
+  height: 20rem;
+`;
+
+const FileInput = styled.input`
+  margin: 0.5rem 0 0 0.5rem;
+  width: calc(100% - 1.5rem);
+  // height: 1.5rem;
+`;
+
+const PostButton = styled.button`
+  background-color: skyblue;
+  border: 0px;
+  width: 6rem;
+  height: 2.2rem;
+  cursor: pointer;
+  color: black;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0 1rem 0 0;
+
+  font-family: "Noto Sans KR", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 600;
+
+  &:hover {
+  background-color: #7cc6e3;
+  }
+`;
