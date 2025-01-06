@@ -13,6 +13,7 @@ const Post = () => {
   const [category, setCategory] = useState("일반");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(false);
+  const [previewURL, setPreviewURL] = useState("");
 
   const { currentUser } = useContext(AuthContext); // 현재 사용자 정보 가져오기
   const navigate = useNavigate();
@@ -51,6 +52,27 @@ const Post = () => {
     alert("게시글이 업로드되었습니다!");
     navigate("/list"); // 게시글 목록 페이지로 이동
   };
+
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0];
+  
+    if (selectedFile) {
+      setFile(selectedFile);
+  
+      // Firebase Storage에 파일 업로드
+      const storage = getStorage();
+      const fileRef = storageRef(storage, `uploads/${selectedFile.name}`);
+      await uploadBytes(fileRef, selectedFile);
+  
+      // 업로드된 파일의 URL 가져오기
+      const url = await getDownloadURL(fileRef);
+  
+      // URL을 상태로 저장
+      setPreviewURL((prevContent) => `${prevContent}\nURL : ${url}`);
+      alert("파일이 업로드되었습니다! 본문에 삽입되었습니다.");
+    }
+  };
+  
 
   return (
     currentUser ?
@@ -103,12 +125,20 @@ const Post = () => {
 
         <CustomDiv>
           <SmallTitle>파일 첨부</SmallTitle>
-          <FileInput type="file" onChange={(e) => setFile(e.target.files[0])} />
+          <div style={{display:'flex', width:'100%', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <FileInput type="file" onChange={handleFileChange} />
+          <PostButton type="submit">게시글 작성</PostButton>
+          </div>
         </CustomDiv>
 
-        <CustomDiv style={{alignItems:'flex-end'}}>
-          <PostButton type="submit">게시글 작성</PostButton>
+        <SmallTitle style={{textAlign:'left'}}>첨부파일 링크</SmallTitle>
+        <CustomDiv style={{backgroundColor:'lightgray', width:'calc(100% - 1.1rem)', margin:'0.5rem'}}>
+          <FileLink>{previewURL}</FileLink>
         </CustomDiv>
+
+        {/* <CustomDiv style={{alignItems:'flex-end'}}>
+          <PostButton type="submit">게시글 작성</PostButton>
+        </CustomDiv> */}
       </form>
 
       {preview && 
@@ -172,7 +202,7 @@ const TitleInput = styled.input`
   height: 1.5rem;
   // background-color: lightgray;
 `;
-//style={{width:'90%', margin:'2rem 0 5rem 0.5rem'}}
+
 const PreviewContainer = styled.div`
   width: calc(90% - 0.5rem);
   margin: 2rem 0 5rem 0.5rem;
@@ -183,6 +213,11 @@ const ContentTextArea = styled.textarea`
   margin: 0.5rem 0 0 0.5rem;
   width: calc(100% - 1.5rem);
   height: 20rem;
+`;
+
+const FileLink = styled.p`
+  margin: 0 0 0 0.3rem;
+  font-size: 1rem;
 `;
 
 const FileInput = styled.input`

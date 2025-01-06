@@ -4,6 +4,7 @@ import './App.css';
 import styled from 'styled-components';
 import Home from './components/Home';
 import Header from './components/Head/Header';
+import Tail from './components/Head/Tail';
 import Test from './components/test';
 import Test2 from './components/test2';
 import ErrorPage from './components/ErrorPage';
@@ -22,20 +23,21 @@ import { AuthProvider } from './components/firebase/AuthContext ';
 const Layout = ({ children }) => {
   return (
     <Container>
-      <div style={{ width: '80%' }}>
+      <div style={{ width: '80%'}}>
         <Header />
-        <div style={{ display: 'flex', backgroundColor: 'white', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'center' }}>
           <div style={{ flex: 2 }}>
             <SideMenu />
           </div>
 
-          <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 10, marginRight: 10 }} />
+          {/* <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 10, marginRight: 10 }} /> */}
 
           <div style={{ flex: 8 }}>
             {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
           </div>
         </div>
       </div>
+      <Tail/>
     </Container>
   );
 };
@@ -115,7 +117,8 @@ export default App;
 
 const Container = styled.div`
   display: flex;
-  // align-items: center;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   // height: 100vh;
   // background-color: lightgray;

@@ -38,10 +38,10 @@ const SideMenu = () => {
 
     return (
         <div style={{backgroundColor:'lightgray', marginTop: 15}}>
-            {/* <p style={{fontWeight:'bold', color:'white'}}>좌측 메뉴 (RightMenu.js)</p> */}
-            <Profile />
-            <PrintButton />
-            <Category />
+          {/* <p style={{fontWeight:'bold', color:'white'}}>좌측 메뉴 (RightMenu.js)</p> */}
+          <Profile />
+          <PrintButton />
+          <Category />
         </div>
     );
 };

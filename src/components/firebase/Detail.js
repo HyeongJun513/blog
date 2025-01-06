@@ -154,13 +154,6 @@ const Detail = () => {
         <PostContent>
           <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} />
         </PostContent>
-        {post.fileURL && (
-          <div>
-            <a href={post.fileURL} target="_blank" rel="noopener noreferrer">
-              첨부파일 보기
-            </a>
-          </div>
-        )}
 
         <hr />
         
