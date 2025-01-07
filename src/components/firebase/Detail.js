@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getDatabase, ref, get, set, push, remove } from "firebase/database";
 import { getStorage, ref as storageRef, deleteObject } from "firebase/storage";
 import { AuthContext } from "./AuthContext ";
@@ -16,8 +16,18 @@ const Detail = () => {
   const [comment, setComment] = useState("");
   
   const navigate = useNavigate(); // 삭제 후 List 페이지로 이동하기 위해 사용
+  const location = useLocation();
+
   const db = getDatabase(); // Realtime Database 사용
   const { currentUser } = useContext(AuthContext); // 현재 사용자 정보 가져오기
+  const sortedPosts = location.state?.sortedPosts || []; //게시글 목록 배열
+  const currentIndex = sortedPosts.findIndex((p) => p.id === id); //현재 게시글의 배열 인덱스 추출
+  // console.log('sortedPosts : ', sortedPosts);
+  // console.log('인덱스 : ', currentIndex);
+  const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null; //다음 게시글
+  const previousPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null; //이전 게시글
+  // console.log('previousPost : ', previousPost);
+  // console.log('nextPost : ', nextPost);
 
   // 게시글 데이터 가져오기
   useEffect(() => {
@@ -31,6 +41,7 @@ const Detail = () => {
       }
     };
 
+    // 댓글 데이터 가져오기
     const fetchComments = async () => {
       const commentsRef = ref(db, `comments/${id}`); // 게시글에 연결된 댓글
       const snapshot = await get(commentsRef);
@@ -40,8 +51,21 @@ const Detail = () => {
       }
     };
 
+    const incrementViewCount = async () => { // 게시글 조회수(View+1)
+      const postRef = ref(db, `posts/${id}/views`);
+  
+      await get(postRef).then(async (snapshot) => {
+        if (snapshot.exists()) {
+          await set(postRef, snapshot.val() + 1);
+        } else {
+          await set(postRef, 1); // 조회수가 없을 경우 초기화
+        }
+      });
+    };
+
     fetchPost();
     fetchComments();
+    incrementViewCount();
   }, [id]);
 
   // 게시글 삭제 함수
@@ -147,20 +171,67 @@ const Detail = () => {
           <Time style={{}}>작성: {post.uploadTime} &nbsp; &nbsp;</Time>
           {post.editTime && <Time>수정: {post.editTime}</Time>}
         </div>
-        <hr />
+        <HR />
 
         {/* 게시글 내용 */}
         {/* <PostContent>{post.content}</PostContent> */}
         <PostContent>
           <ReactMarkdown children={post.content} remarkPlugins={[remarkGfm]} />
         </PostContent>
+        
+        {/* 게시글 마무리 부분 */}
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end', marginTop:'4rem'}}>
+          <div style={{display:'flex', flexDirection:'row', alignItems:'center', margin:'0'}}>
+            <TailText>Posted By</TailText>
+            <TailText style={{backgroundColor:'white', color: 'gray'}}>콘스</TailText>
+          </div>
+          <VisitorText>조회수: {post.views}</VisitorText>
+        </div>
 
         <hr />
-        
+
+        {/* 이전글, 다음글 버튼 */}
+        <div style={{display:'flex', flexDirection:'column', width:'100%', textAlign:'left', marginTop: '1rem'}}>
+
+          <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+            <CommentContainerIcon alt="page" src={`${process.env.PUBLIC_URL}/img/page.png`} style={{}}/>
+            <TailTitle>다른 글 둘러보기</TailTitle>
+          </div>
+
+          <div style={{display:'flex', flexDirection:'row', width:'100%'}}>
+          {previousPost ? (
+            <MovePostButton onClick={() => navigate(`/list/${previousPost.id}`, { state: { sortedPosts } })} style={{borderRight:'0'}}>
+              <p style={{margin: '0', fontSize:'0.8rem', color:'gray'}}>이전 글</p>
+              <MovePostText>{previousPost.title}</MovePostText>
+            </MovePostButton>
+          )
+          :
+          (<NoneDiv>
+            <p>이전 글이 없습니다.</p>
+          </NoneDiv>
+          )}
+          {nextPost ? (
+            <MovePostButton onClick={() => navigate(`/list/${nextPost.id}`, { state: { sortedPosts } })}>
+              <p style={{margin: '0', fontSize:'0.8rem', color:'gray'}}>다음 글</p>
+              <MovePostText>{nextPost.title}</MovePostText>
+            </MovePostButton>
+          )
+          :
+          (<NoneDiv>
+            <p style={{margin:'0 0 0 0'}}>다음 글이 없습니다.</p>
+          </NoneDiv>
+          )}
+          </div>
+
+        </div>
+      
         {/* 댓글 */}
-        <div style={{display:'flex', flexDirection:'row', alignItems:'center', marginTop:'1.5rem', marginBottom:'0.5rem'}}>
-          <CommentContainerIcon alt="comment" src={`${process.env.PUBLIC_URL}/img/comments.png`} />
-          <p style={{textAlign:'left', margin:0, fontSize:'1.5rem'}}>댓글({comments.length})</p>
+        <div style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'space-between', margin: '2rem 0 0 0'}}>
+          <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+            <CommentContainerIcon alt="comment" src={`${process.env.PUBLIC_URL}/img/comments.png`} />
+            <TailTitle>댓글({comments.length})</TailTitle>
+          </div>
+          {/* <VisitorText>조회수: {post.views}</VisitorText> */}
         </div>
         
           {/* 댓글 목록 */}
@@ -256,11 +327,17 @@ const Title = styled.p`
   font-size: 1.5rem;
 `;
 
+const HR = styled.hr`
+  height : 0.2rem;
+  background-color : gray;
+  border : 0;
+`;
+
 const Time = styled.p`
   display: flex;
   // flex-direction: row;
   // text-align: left;
-  margin: 0.8rem 0.4rem 0.4rem 0; 
+  margin: 0.8rem 0.4rem 0 0; 
   color: gray; 
   font-weight: 600;
   font-size: 1rem;
@@ -286,11 +363,77 @@ const PostContent = styled.p`
   text-align: left;
 `;
 
+const NoneDiv = styled.div`
+  width: 50%;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0.7rem;
+
+  color: gray;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+`;
+
+const MovePostButton = styled.button`
+  width: 50%;
+  cursor: pointer;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0.7rem;
+
+  &:hover {
+  // text-decoration: underline;
+  background-color: lightgray;
+  }
+`;
+
+const MovePostText = styled.p`
+  margin: 0.2rem 0 0 0;
+  color: #2A408E;
+  font-size: 1.2rem;
+
+  display: -webkit-box; /* 웹킷 브라우저 호환성 */
+  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
+  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+`;
+
 const CommentContainerIcon = styled.img`
   filter: opacity(0.8);
-  width: 2rem;
-  height: 2.1rem;
-  margin: 0.2rem 0.2rem 0 0.3rem;
+  width: 1.8rem;
+  height: 1.9rem;
+  margin: 0.2rem 0.2rem 0.4rem 0;
+`;
+
+const TailText = styled.p`
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: gray;
+  color: white;
+  padding: 0rem 0.5rem 0.2rem 0.5rem;
+  border-radius: 10px;
+  margin: 0;
+`
+
+const TailTitle = styled.p`
+  margin: 0 0 0.2rem 0;
+  font-size: 1.7rem;
+
+  font-family: "Yeon Sung", serif;
+  font-weight: 500;
+  font-style: normal;
+`;
+
+const VisitorText = styled.p`
+  margin: 0.3rem 0 0 0;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: gray;
 `;
 
 const CommentListContainer = styled.div`

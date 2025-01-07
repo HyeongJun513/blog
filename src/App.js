@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'; // 라우터 관련 컴포넌트 임포트
+import { getDatabase, ref, get, set } from 'firebase/database';
 import './App.css';
 import styled from 'styled-components';
 import Home from './components/Home';
@@ -43,6 +44,37 @@ const Layout = ({ children }) => {
 };
 
 const App = () => {
+  const VisitorCount = async () => { //방문자 카운트
+    const db = getDatabase();
+    const visitorsRef = ref(db, "visitors"); //누적 방문자
+    const dailyVisitorsRef = ref(db, "dailyVisitors"); //오늘자 방문자(수동 초기화)
+  
+    await get(visitorsRef).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        // 방문자 수 1 증가
+        await set(visitorsRef, snapshot.val() + 1);
+      } else {
+        // 초기화
+        await set(visitorsRef, 1);
+      }
+    });
+
+    await get(dailyVisitorsRef).then(async (snapshot) => {
+      if (snapshot.exists()) {
+        // 방문자 수 1 증가
+        await set(dailyVisitorsRef, snapshot.val() + 1);
+      } else {
+        // 초기화
+        await set(dailyVisitorsRef, 1);
+      }
+    });
+  };
+  
+
+
+  useEffect(() => {
+    VisitorCount();
+  }, []);
 
   return (
     <div style={{fontSize: 25, textAlign: 'center'}}>

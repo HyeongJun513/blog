@@ -44,6 +44,7 @@ const Post = () => {
       fileURL,
       createdAt: Date.now(),
       uploadTime : new Date().toLocaleString(),
+      views: 0,
       // editTime: 'None',
     };
 

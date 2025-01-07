@@ -44,7 +44,7 @@ const Category = () => {
             {/* <p style={{margin: '0.5rem'}}>메뉴</p>
             <hr /> */}
             <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체 ({postCounts.all})</CategoryButton>
-            <hr />
+            <hr style={{backgroundColor:'gray', height:'0.1rem', border: 0}}/>
             <CategoryList>
                 <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
                 <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
@@ -58,10 +58,10 @@ const Category = () => {
 export default Category;
 
 const CategoryButton = styled.button`
-  padding:5px 10px 5px 10px;
+  // padding:5px 10px 5px 10px;
   width: auto;
   height: auto;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
   background-color: white;
   border: 0px;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+// import ReactMarkdown from "react-markdown";
+// import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 import { marked } from "marked"; //markdown을 html 방식으로 변환하는 모듈
 
@@ -20,13 +20,13 @@ const List = () => {
 
     const unsubscribe = onValue(postsRef, (snapshot) => {
       const data = snapshot.val();
+      console.log('data : ', data)
       const postsArray = data
         ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
         : [];
       setPosts(postsArray.reverse()); //데이터 역순 (최신 데이터 위로, 과거 데이터 아래로로)
     });
 
-    
     return () => unsubscribe();
   }, []);
 
@@ -59,11 +59,10 @@ const List = () => {
     
     const previewText = stripMarkdown(post.content);
 
-
     return (
       <div style={{display:'flex', flexDirection:'column'}}>
 
-        <ListButton onClick={() => {navigate(`/list/${post.id}`)}} >
+        <ListButton onClick={() => {navigate(`/list/${post.id}`, {state : {sortedPosts: posts}})}} >
           <Title style={{fontSize: '1.5rem'}}>{post.title}</Title>
         </ListButton>
 
@@ -72,7 +71,8 @@ const List = () => {
         </Content>
 
         <Tail style={{ fontSize:'0.9rem' }}>
-        {post.category} &nbsp; / &nbsp; {(post.uploadTime).split(' 오후')[0]}
+        <TailIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
+        <TailIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {(post.uploadTime).split(' 오후')[0]}
         </Tail>
 
         <hr style={{width: '100%', margin:'0.3rem 0 0 0'}}/>
@@ -167,7 +167,15 @@ const Title = styled.p`
 const Tail = styled.p`
   display: flex;
   flex-direction: row;
-  margin: 0.4rem; 
+  align-items: center;
+  margin:  0.1rem 0 0 0.2rem; 
   color: gray; 
   font-weight: bold;
+`;
+
+const TailIcon = styled.img`
+  filter: opacity(0.6);
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.4rem 0.1rem 0.4rem 0;
 `;
