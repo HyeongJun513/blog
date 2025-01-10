@@ -48,7 +48,9 @@ const Detail = () => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setComments(Object.entries(data).map(([key, value]) => ({ id: key, ...value })));
-      }
+      } else {
+        setComments([]); // 댓글이 없는 경우 상태를 빈 배열로 초기화
+      };
     };
 
     const incrementViewCount = async () => { // 게시글 조회수(View+1)
@@ -188,7 +190,7 @@ const Detail = () => {
           <VisitorText>조회수: {post.views}</VisitorText>
         </div>
 
-        <hr />
+        <hr style={{marginTop:'0.2rem'}}/>
 
         {/* 이전글, 다음글 버튼 */}
         <div style={{display:'flex', flexDirection:'column', width:'100%', textAlign:'left', marginTop: '1rem'}}>

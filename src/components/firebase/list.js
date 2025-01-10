@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-// import ReactMarkdown from "react-markdown";
-// import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 import { marked } from "marked"; //markdown을 html 방식으로 변환하는 모듈
 
@@ -23,12 +21,22 @@ const List = () => {
       console.log('data : ', data)
       const postsArray = data
         ? Object.keys(data).map((key) => ({ id: key, ...data[key] }))
+        .filter((post) => validatePost(post)) // 유효한 게시글만 필터링
         : [];
       setPosts(postsArray.reverse()); //데이터 역순 (최신 데이터 위로, 과거 데이터 아래로로)
     });
 
     return () => unsubscribe();
   }, []);
+
+  // 게시글 유효성 검사 함수 (잘못된 데이터가 있다면 출력값 없음)
+  const validatePost = (post) => {
+    return (
+      typeof post.title === "string" && post.title.trim() !== "" &&
+      typeof post.content === "string" && post.content.trim() !== "" &&
+      typeof post.category === "string" && post.category.trim() !== ""
+    );
+  };
 
   const printListHeader = () =>{
     const Description = () =>{

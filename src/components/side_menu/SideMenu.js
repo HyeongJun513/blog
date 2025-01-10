@@ -52,6 +52,7 @@ const SideMenu = () => {
             return (
                 <div>
                     <SideButton onClick={() => {navigate('/post')}}>게시글 작성</SideButton>
+                    <SideButton onClick={() => {navigate('/portfolio/post')}}>포트폴리오 작성</SideButton>
                     <SideButton onClick={() => {handleLogout()}}>로그아웃</SideButton>
                 </div>
             )

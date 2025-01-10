@@ -17,6 +17,7 @@ import SignUp from './components/firebase/SignUp';
 import Detail from './components/firebase/Detail';
 import Edit from './components/firebase/Edit';
 import PortfolioHome from './components/Portfolio/PortfolioHome';
+import PortfolioPost from './components/Portfolio/PortfolioPost';
 
 import { AuthProvider } from './components/firebase/AuthContext ';
 
@@ -123,6 +124,11 @@ const App = () => {
             <Route path='portfolio' element={
                 <Layout>
                   <PortfolioHome />
+                </Layout>
+            }/>
+            <Route path='portfolio/post' element={
+                <Layout>
+                  <PortfolioPost />
                 </Layout>
             }/>
             <Route path='test1' element={

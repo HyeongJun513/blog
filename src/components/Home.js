@@ -35,11 +35,11 @@ const Home = () => {
             <p>게시글 목록 출력 (Home.js)</p>
             <h3>할일 목록(0106 수정)</h3>
             <p>
-                게시글 검색기능,
+                게시글 검색기능, 폰트 및 사이드 모서리 통일
                 <br />
-                포트폴리오, 프로필, 방문자 및 조회수,
+                포트폴리오(md사용), 프로필
                 <br />
-                이전글 다음글 카테고리 다른글 등등 추가하기
+                등등 기능 추가하기
             </p>
             <div style={{flexDirection:'row'}}>
                 <NumberButton onClick={NumberPlus} > 숫자 + </NumberButton>
