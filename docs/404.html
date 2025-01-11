@@ -1,21 +1,20 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Page Not Found</title>
-  <script>
-    // 경로를 SPA의 index.html로 리다이렉트
-    const redirectTo = window.location.pathname.replace('/blog', '');
-    if (redirectTo !== '/') {
-      window.location.href = '/blog/index.html#' + redirectTo;
-    }
-  </script>
-</head>
-<body>
-  <h1>Redirecting...</h1>
-</body>
-</html> 
+  <head>
+    <meta charset="UTF-8">
+    <title>Page Not Found</title>
+    <script>
+      // 경로를 SPA의 index.html로 리다이렉트
+      const redirectTo = window.location.pathname.replace('/blog', '');
+      if (redirectTo !== '/') {
+        window.location.href = '/blog' + redirectTo;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
+</html>
 
 
 <!-- <!DOCTYPE html>
