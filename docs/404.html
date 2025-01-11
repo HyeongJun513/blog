@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <script>
+      // 잘못된 경로를 리다이렉트하여 React 앱에 전달
+      const redirectTo = window.location.pathname.replace('/blog', '');
+      window.location.href = `/blog/#${redirectTo}`;
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; url=/blog/" />
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>  -->
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Page Not Found</title>
@@ -19,7 +45,8 @@
 <body>
   <h1>Redirecting...</h1>
 </body>
-</html>
+</html> 
+-->
 
 <!-- 
 <!DOCTYPE html>
@@ -40,14 +67,3 @@
   </body>
 </html> 
 -->
-
-
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="refresh" content="0; url=/blog/" />
-  </head>
-  <body>
-    Redirecting...
-  </body>
-</html> -->

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'; // 라우터 관련 컴포넌트 임포트
+import { BrowserRouter, HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'; // 라우터 관련 컴포넌트 임포트
 import { getDatabase, ref, get, set } from 'firebase/database';
 import './App.css';
 import styled from 'styled-components';
@@ -81,77 +81,21 @@ const App = () => {
   return (
     <div style={{textAlign: 'center'}}>
       <AuthProvider>
-        <BrowserRouter basename='/blog'>
+        <HashRouter>
           <Routes>
-            <Route 
-            path='/'
-            element={
-              <Layout>
-                {/* <Home /> */}
-                <List />
-              </Layout>
-            }
-            />
-            <Route path='post' element={ //게시글 작성
-                <Layout>
-                  <Post />
-                </Layout>
-            }/>
-            <Route path='list' element={ //게시글 목록
-                <Layout>
-                  <List />
-                </Layout>
-            }/>
-            <Route path="list/:id" element={ //게시글 조회
-                <Layout>
-                  <Detail />
-                </Layout>
-            }/>
-            <Route path="edit/:id" element={ //게시글 수정
-                <Layout>
-                  <Edit />
-              </Layout>
-            }/>
-            <Route path='signup' element={ //회원가입
-                <Layout>
-                  <SignUp />
-                </Layout>
-            }/>
-            <Route path='login' element={ //로그인 및 로그아웃
-                <Layout>
-                  <Login />
-                </Layout>
-            }/>
-            <Route path='portfolio' element={ //포트폴리오
-                <Layout>
-                  <PortfolioHome />
-                </Layout>
-            }/>
-            <Route path='portfolio/post' element={ //포트폴리오 게시글 작성
-                <Layout>
-                  <PortfolioPost />
-                </Layout>
-            }/>
-            <Route path='portfolio/edit' element={ //포트폴리오 게시글 수정
-                <Layout>
-                  <PortfolioEdit />
-                </Layout>
-            }/>
-            <Route path='test1' element={
-                <Layout>
-                  <Test />
-                </Layout>
-            }/>
-            <Route path='test2' element={
-                <Layout>
-                  <Test2 />
-                </Layout>
-            }/>
-            <Route path='*' element={ //경로가 잘못된 경우 에러페이지 출력
-              <ErrorPage />
-            } />
+            <Route path="/" element={<Layout><List /></Layout>} />
+            <Route path="post" element={<Layout><Post /></Layout>} />
+            <Route path="list" element={<Layout><List /></Layout>} />
+            <Route path="list/:id" element={<Layout><Detail /></Layout>} />
+            <Route path="edit/:id" element={<Layout><Edit /></Layout>} />
+            <Route path="signup" element={<Layout><SignUp /></Layout>} />
+            <Route path="login" element={<Layout><Login /></Layout>} />
+            <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
+            <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
+            <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </AuthProvider>
     </div>
   );
@@ -167,3 +111,76 @@ const Container = styled.div`
   // height: 100vh;
   // background-color: lightgray;
 `;
+
+{/* <AuthProvider>
+<BrowserRouter basename='/blog'>
+  <Routes>
+    <Route 
+    path='/'
+    element={
+      <Layout>
+        <List />
+      </Layout>
+    }
+    />
+    <Route path='post' element={ //게시글 작성
+        <Layout>
+          <Post />
+        </Layout>
+    }/>
+    <Route path='list' element={ //게시글 목록
+        <Layout>
+          <List />
+        </Layout>
+    }/>
+    <Route path="list/:id" element={ //게시글 조회
+        <Layout>
+          <Detail />
+        </Layout>
+    }/>
+    <Route path="edit/:id" element={ //게시글 수정
+        <Layout>
+          <Edit />
+      </Layout>
+    }/>
+    <Route path='signup' element={ //회원가입
+        <Layout>
+          <SignUp />
+        </Layout>
+    }/>
+    <Route path='login' element={ //로그인 및 로그아웃
+        <Layout>
+          <Login />
+        </Layout>
+    }/>
+    <Route path='portfolio' element={ //포트폴리오
+        <Layout>
+          <PortfolioHome />
+        </Layout>
+    }/>
+    <Route path='portfolio/post' element={ //포트폴리오 게시글 작성
+        <Layout>
+          <PortfolioPost />
+        </Layout>
+    }/>
+    <Route path='portfolio/edit' element={ //포트폴리오 게시글 수정
+        <Layout>
+          <PortfolioEdit />
+        </Layout>
+    }/>
+    <Route path='test1' element={
+        <Layout>
+          <Test />
+        </Layout>
+    }/>
+    <Route path='test2' element={
+        <Layout>
+          <Test2 />
+        </Layout>
+    }/>
+    <Route path='*' element={ //경로가 잘못된 경우 에러페이지 출력
+      <ErrorPage />
+    } />
+  </Routes>
+</BrowserRouter>
+</AuthProvider> */}
