@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
+import { AuthContext } from "../firebase/AuthContext ";
 import { marked } from "marked"; //markdown을 html 방식으로 변환하는 모듈
 import styled from "styled-components";
 import ReactModal from "react-modal";
@@ -30,6 +31,9 @@ const PortfolioHome = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
+    const navigate = useNavigate();
+    const { currentUser } = useContext(AuthContext); //로그인 사용자 판별
+
     const openModal = (post) => {
       setSelectedPost(post);
       setModalIsOpen(true);
@@ -57,34 +61,34 @@ const PortfolioHome = () => {
     }, []);
 
     const printList = (post) => {
-      const stripMarkdown = (markdown) => { //미리보기에 마크다운 코드 제거 함수
-        const html = marked.parse(markdown); //Markdown 텍스트를 HTML 문자열로 변환
-        const tempDiv = document.createElement("div"); //임시 div엘리먼트 생성.
-        tempDiv.innerHTML = html; //임시 div 엘리먼트 내부에 변환된 HTML 삽입
-        return tempDiv.textContent || tempDiv.innerText || ""; //임시 div 엘리먼트 내부에 존재하는 텍스트만 추출 //textContent가 작동하지 않는 브라우저인 경우 innerText 사용, 그도 안되면 그냥 공백값 반환
-      }; //textContent: HTML 태그를 무시하고 모든 텍스트를 반환. //innerText: 화면에 보이는 텍스트만 반환 (<h4 style="display:none">숨겨진 제목</h4> 인 경우 반환하지 않음).
+      // const stripMarkdown = (markdown) => { //미리보기에 마크다운 코드 제거 함수
+      //   const html = marked.parse(markdown); //Markdown 텍스트를 HTML 문자열로 변환
+      //   const tempDiv = document.createElement("div"); //임시 div엘리먼트 생성.
+      //   tempDiv.innerHTML = html; //임시 div 엘리먼트 내부에 변환된 HTML 삽입
+      //   return tempDiv.textContent || tempDiv.innerText || ""; //임시 div 엘리먼트 내부에 존재하는 텍스트만 추출 //textContent가 작동하지 않는 브라우저인 경우 innerText 사용, 그도 안되면 그냥 공백값 반환
+      // }; //textContent: HTML 태그를 무시하고 모든 텍스트를 반환. //innerText: 화면에 보이는 텍스트만 반환 (<h4 style="display:none">숨겨진 제목</h4> 인 경우 반환하지 않음).
 
-      const previewText = stripMarkdown(post.content);
+      // const previewText = stripMarkdown(post.content);
 
-      return ( //navigate(`/list/${post.id}` 
-        <div style={{display:'flex', flexDirection:'column'}}>
-  
-          {/* <ListButton onClick={() => openPostDetails(post)} > */}
-          <ListButton onClick={() => openModal(post)} >
-            <Title style={{fontSize: '1.5rem'}}>{post.title}</Title>
-          </ListButton>
-  
-          <Content>
-            <p style={{ margin: 0, fontSize: '1rem' }}>{previewText}</p>
-          </Content>
-  
-          <Tail style={{ fontSize:'0.9rem' }}>
-          <TailIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
-          <TailIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {(post.uploadTime).split(' 오후')[0]}
-          </Tail>
-  
-          <hr style={{width: '100%', margin:'0.3rem 0 0 0'}}/>
-          
+      return (
+        <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
+          <ProjectSmallContainer onClick={() => openModal(post)}>
+    
+            <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
+
+            <ProjectInfo style={{ fontSize:'0.9rem' }}>
+              <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
+              <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate}
+            </ProjectInfo>
+    
+            <ProjectContent>
+              {/* <p style={{ margin: 0, fontSize: '1rem' }}>{previewText}</p> */}
+              <p style={{ margin: 0, fontSize: '1rem' }}>{post.short}</p>
+            </ProjectContent>
+    
+            {/* <hr style={{width: '100%', margin:'0.3rem 0 0 0'}}/> */}
+            
+          </ProjectSmallContainer>
         </div>
       );
     };
@@ -115,12 +119,17 @@ const PortfolioHome = () => {
         );
     };
 
+  // 게시글 수정 함수
+  const handleEdit = (id) => {
+    navigate(`/portfolio/edit`, {state : {id: id}}); // 수정 페이지로 이동
+  };
+
     return (
         <div style={{marginTop:'1rem', display:'flex', flexDirection:'column', alignItems:'center'}}>
             <div style={{width:'90%'}}>
 
                 <IntroduceContainer>
-                    <div style={{borderBottom:'1px solid black', width:'90%'}}>
+                    <div style={{borderBottom:'1px solid black', width:'100%'}}>
                         <Title>About me</Title>
                     </div>
                     <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
@@ -138,13 +147,13 @@ const PortfolioHome = () => {
                 </IntroduceContainer>
 
                 <ProjectContainer>
-                  <div style={{borderBottom:'1px solid black', width:'90%', marginTop:'3rem'}}>
+                  <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 3rem 0'}}>
                       <Title>Projects</Title>
                   </div>
                   {portfolio.map((project) => (
-                    <div key={project.id} style={{width:'90%'}}>
+                    <div key={project.id} style={{width:'100%'}}>
                       {printList(project)}
-                      
+
                       {/* Modal 컴포넌트 */}
                       <ReactModal
                         isOpen={modalIsOpen}
@@ -155,6 +164,7 @@ const PortfolioHome = () => {
                         <h1>{selectedPost?.title}</h1>
                         <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
                         <button onClick={closeModal}>닫기</button>
+                        {currentUser && <button onClick={() => handleEdit(selectedPost.id)}>수정</button>}
                       </ReactModal>
                     </div>
                   ))}
@@ -248,63 +258,60 @@ const ProjectContainer = styled.div`
   display: flex;
   flex-direction : column;
   align-items: center;
+
+  flex-wrap: wrap; /* 줄바꿈 허용 */
+  justify-content: space-evenly; /* 아이템 간격 균등 배치 */
+  gap: 1rem; /* 아이템 간의 간격 */
+  margin: 0 auto; /* 중앙 정렬 */
+  max-width: 1200px; /* 최대 너비 설정 */
 `;
 
-const ProjectButton = styled.div`
-
-`;
-
-
-//=================================================
-const ListButton = styled.button`
+const ProjectSmallContainer = styled.div`
+  display: flex;
   flex-direction: column;
-  height: auto;
-  background-color: white;
-  border: 0px;
-  margin: 0;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin: 0.5rem 0;
+  width: 90%;
   cursor: pointer;
-
-  display: -webkit-box; /* 웹킷 브라우저 호환성 */
-  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
-  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
-  overflow: hidden; /* 넘치는 텍스트 숨김 */
-  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+  transition: transform 0.5s ease, box-shadow 0.5s ease; /* 0.5초 동안 확대 애니메이션 */
 
   &:hover {
-  text-decoration: underline;
-  color: #2A408E;
+    transform: scale(1.1); /* 중앙 기준 10% 확대 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
   }
 `;
 
-const CategoryText = styled.div`
-  font-family: "Yeon Sung", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 2.5rem;
+const ProjectTitle = styled.div`
+  font-weight: bold;
   margin: 0 0 0.3rem 0;
+  font-size: 2rem;
+  color: #2A408E;
 `;
 
-const Content = styled.div`
-  display: -webkit-box; /* 웹킷 브라우저 호환성 */
-  -webkit-line-clamp: 2; /* 최대 2줄 표시 */
-  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
-  overflow: hidden; /* 넘치는 텍스트 숨김 */
-  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
-  background-color: white;
-  text-align: left;
+const ProjectContent = styled.div`
+  // display: -webkit-box; /* 웹킷 브라우저 호환성 */
+  // -webkit-line-clamp: 2; /* 최대 2줄 표시 */
+  // -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
+  // overflow: hidden; /* 넘치는 텍스트 숨김 */
+  // text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+
+  text-align: center;
   margin: 0.3rem 0 0.3rem 0.2rem;
 `;
 
-const Tail = styled.p`
+const ProjectInfo = styled.p`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin:  0.1rem 0 0 0.2rem; 
   color: gray; 
   font-weight: bold;
+  // background-color: skyblue;
 `;
 
-const TailIcon = styled.img`
+const ProjectInfoIcon = styled.img`
   filter: opacity(0.6);
   width: 1.2rem;
   height: 1.2rem;

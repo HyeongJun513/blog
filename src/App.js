@@ -18,6 +18,7 @@ import Detail from './components/firebase/Detail';
 import Edit from './components/firebase/Edit';
 import PortfolioHome from './components/Portfolio/PortfolioHome';
 import PortfolioPost from './components/Portfolio/PortfolioPost';
+import PortfolioEdit from './components/Portfolio/PortfolioEdit';
 
 import { AuthProvider } from './components/firebase/AuthContext ';
 
@@ -78,7 +79,7 @@ const App = () => {
   }, []);
 
   return (
-    <div style={{fontSize: 25, textAlign: 'center'}}>
+    <div style={{textAlign: 'center'}}>
       <AuthProvider>
         <BrowserRouter basename='/blog'>
           <Routes>
@@ -121,14 +122,19 @@ const App = () => {
                   <Login />
                 </Layout>
             }/>
-            <Route path='portfolio' element={
+            <Route path='portfolio' element={ //포트폴리오
                 <Layout>
                   <PortfolioHome />
                 </Layout>
             }/>
-            <Route path='portfolio/post' element={
+            <Route path='portfolio/post' element={ //포트폴리오 게시글 작성
                 <Layout>
                   <PortfolioPost />
+                </Layout>
+            }/>
+            <Route path='portfolio/edit' element={ //포트폴리오 게시글 수정
+                <Layout>
+                  <PortfolioEdit />
                 </Layout>
             }/>
             <Route path='test1' element={

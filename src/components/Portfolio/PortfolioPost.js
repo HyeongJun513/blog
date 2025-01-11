@@ -9,7 +9,9 @@ import styled from "styled-components";
 
 const PortfolioPost = () => {
   const [title, setTitle] = useState("");
+  const [short, setShort] = useState("");
   const [content, setContent] = useState("");
+  const [projectDate, setProjectDate] = useState("");
   const [category, setCategory] = useState("Portfolio");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(false);
@@ -39,12 +41,13 @@ const PortfolioPost = () => {
     };
     const newPost = {
       title,
+      short,
       content,
       category,
       fileURL,
       createdAt: Date.now(),
       uploadTime : new Date().toLocaleString(),
-      views: 0,
+      projectDate,
     };
 
     await push(postsRef, newPost);
@@ -111,6 +114,28 @@ const PortfolioPost = () => {
         </CustomDiv>
 
         <CustomDiv>
+          <SmallTitle>요약 설명</SmallTitle>
+          <TitleInput
+            type="text"
+            value={short}
+            onChange={(e) => setShort(e.target.value)}
+            placeholder="포트폴리오 요약 설명"
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>프로젝트 날짜</SmallTitle>
+          <TitleInput
+            type="text"
+            value={projectDate}
+            onChange={(e) => setProjectDate(e.target.value)}
+            placeholder="포트폴리오 작업 날짜(ex. 2024.12 / 2024.12 - 2025.02)"
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
           <SmallTitle>내용</SmallTitle>
             <ContentTextArea
               value={content}
@@ -147,7 +172,7 @@ const PortfolioPost = () => {
     :
     <div>
       <h1>게시글 작성</h1>
-      <h3 style={{color: 'red'}}>! 게시글 작성에는 로그인이 필요합니다 !</h3>
+      <h3 style={{color: 'red'}}>! 포트폴리오 작성에는 로그인이 필요합니다 !</h3>
     </div>
   );
 };
