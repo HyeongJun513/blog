@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Page Not Found</title>
+  <script>
+    // 현재 경로에서 '/blog'를 제거한 후 리다이렉트
+    (function () {
+      const currentPath = window.location.pathname;
+      const redirectTo = currentPath.replace('/blog', '');
+
+      // 현재 URL이 이미 index.html에 리다이렉트된 경우 무한 로딩 방지
+      if (!currentPath.startsWith('/blog/index.html') && redirectTo !== '/') {
+        window.location.href = '/blog/index.html#' + redirectTo;
+      }
+    })();
+  </script>
+</head>
+<body>
+  <h1>Redirecting...</h1>
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html>
   <head>
     <meta charset="UTF-8">
     <title>Page Not Found</title>
@@ -14,7 +38,8 @@
   <body>
     <h1>Redirecting...</h1>
   </body>
-</html>
+</html> 
+-->
 
 
 <!-- <!DOCTYPE html>
