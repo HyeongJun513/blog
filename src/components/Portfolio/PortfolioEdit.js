@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getDatabase, ref, get, update } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, deleteObject, getDownloadURL } from "firebase/storage";
 import { AuthContext } from "../firebase/AuthContext ";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import styled from "styled-components";
 
 const PortfolioEdit = () => {
@@ -12,8 +14,11 @@ const PortfolioEdit = () => {
   const [title, setTitle] = useState("");
   const [short, setShort] = useState("");
   const [projectDate, setProjectDate] = useState("");
+  const [personNum, setPersonNum] = useState("");
+  const [skils, setSkils] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("Portfolio");
+  const [preview, setPreview] = useState(false);
   const [file, setFile] = useState(null);
 
   const db = getDatabase();
@@ -33,6 +38,8 @@ const PortfolioEdit = () => {
         setTitle(data.title);
         setShort(data.short);
         setProjectDate(data.projectDate);
+        setPersonNum(data.personNum);
+        setSkils(data.skils);
         setContent(data.content);
         setCategory(data.category);
       } else {
@@ -74,13 +81,15 @@ const PortfolioEdit = () => {
       updatedAt: Date.now(),
       editTime: new Date().toLocaleString(),
       projectDate,
+      personNum,
+      skils,
     };
 
-    const postRef = ref(db, "posts/" + id);
+    const postRef = ref(db, "Portfolio/" + id);
     await update(postRef, updatedPost);
 
     alert("게시글이 수정되었습니다!");
-    navigate(`/list/${id}`); // 수정 완료 후 해당 게시글로 이동
+    navigate(`/portfolio`); // 수정 완료 후 해당 게시글로 이동
   };
 
   if (!post) {
@@ -94,11 +103,21 @@ const PortfolioEdit = () => {
       {currentUser ?
       <form onSubmit={handleSubmit} style={{width:'90%'}}>
 
-        <CustomDiv>
-          <SmallTitle>카테고리</SmallTitle>
-          <CategorySelect value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="Portfolio">포트폴리오</option>
-          </CategorySelect>
+          <CustomDiv style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+          <div style={{textAlign:'left'}}>
+            <SmallTitle>카테고리</SmallTitle>
+            <CategorySelect value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="Portfolio">포트폴리오</option>
+            </CategorySelect>
+          </div>
+          <div>
+            <SmallTitle>미리보기</SmallTitle>
+            <CheckboxInput
+              type="checkbox"
+              checked={preview}
+              onChange={(e) => {setPreview(e.target.checked)}}
+            />
+          </div>
         </CustomDiv>
 
         <CustomDiv>
@@ -132,6 +151,28 @@ const PortfolioEdit = () => {
             required
           />
         </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>프로젝트 인원</SmallTitle>
+          <TitleInput
+            type="text"
+            value={personNum}
+            onChange={(e) => setPersonNum(e.target.value)}
+            placeholder="1인, 개인 프로젝트 / 3인, 팀 프로젝트"
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>기술 스택</SmallTitle>
+          <TitleInput
+            type="text"
+            value={skils}
+            onChange={(e) => setSkils(e.target.value)}
+            placeholder="React, React-Native, Typescript, Styled-Components, Css, HTML, JS, Firebase"
+            required
+          />
+        </CustomDiv>
         
         <CustomDiv>
           <SmallTitle>내용</SmallTitle>
@@ -154,6 +195,15 @@ const PortfolioEdit = () => {
         <CustomDiv style={{alignItems:'flex-end'}}>
           <PostButton type="submit">게시글 수정</PostButton>
         </CustomDiv>
+        {preview && 
+              <PreviewContainer>
+                <Title>미리보기</Title>
+                <hr />
+                <PreviewContent>
+                  <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+                </PreviewContent>
+              </PreviewContainer>
+              }
       </form>
       :
       <div>
@@ -195,6 +245,12 @@ const SmallTitle = styled.p`
   margin: 1rem 0 0 0.5rem;
 `;
 
+const CheckboxInput = styled.input`
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+`;
+
 const TitleInput = styled.input`
   margin: 0.5rem 0 0 0.5rem;
   width: calc(100% - 1.5rem);
@@ -234,4 +290,14 @@ const PostButton = styled.button`
   &:hover {
   background-color: #7cc6e3;
   }
+`;
+
+const PreviewContainer = styled.div`
+  width: calc(90% - 0.5rem);
+  margin: 2rem 0 5rem 0.5rem;
+`
+
+const PreviewContent = styled.p`
+  font-size: 1.2rem;
+  text-align: left;
 `;

@@ -18,8 +18,9 @@ const customStyles = {
     transform: "translate(-50%, -50%)", // 화면 중앙 정렬
     width: "40vw", // 창 크기
     height: "90vh",
-    padding: "20px",
+    padding: "0px",
     borderRadius: "10px",
+    overflow: "hidden", // 스크롤바가 모달 경계를 넘지 않도록 설정
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 흐림 효과
@@ -61,33 +62,26 @@ const PortfolioHome = () => {
     }, []);
 
     const printList = (post) => {
-      // const stripMarkdown = (markdown) => { //미리보기에 마크다운 코드 제거 함수
-      //   const html = marked.parse(markdown); //Markdown 텍스트를 HTML 문자열로 변환
-      //   const tempDiv = document.createElement("div"); //임시 div엘리먼트 생성.
-      //   tempDiv.innerHTML = html; //임시 div 엘리먼트 내부에 변환된 HTML 삽입
-      //   return tempDiv.textContent || tempDiv.innerText || ""; //임시 div 엘리먼트 내부에 존재하는 텍스트만 추출 //textContent가 작동하지 않는 브라우저인 경우 innerText 사용, 그도 안되면 그냥 공백값 반환
-      // }; //textContent: HTML 태그를 무시하고 모든 텍스트를 반환. //innerText: 화면에 보이는 텍스트만 반환 (<h4 style="display:none">숨겨진 제목</h4> 인 경우 반환하지 않음).
-
-      // const previewText = stripMarkdown(post.content);
 
       return (
         <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProjectSmallContainer onClick={() => openModal(post)}>
-    
-            <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
-
-            <ProjectInfo style={{ fontSize:'0.9rem' }}>
-              <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
-              <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate}
-            </ProjectInfo>
-    
-            <ProjectContent>
-              {/* <p style={{ margin: 0, fontSize: '1rem' }}>{previewText}</p> */}
-              <p style={{ margin: 0, fontSize: '1rem' }}>{post.short}</p>
-            </ProjectContent>
-    
-            {/* <hr style={{width: '100%', margin:'0.3rem 0 0 0'}}/> */}
-            
+            <ProjectImg alt="Profile" src={`${post.coverImg}`}/>
+            <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'1rem'}}>
+              <div>
+                <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
+                <ProjectInfo style={{ fontSize:'0.9rem' }}>
+                  <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
+                  <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate}
+                </ProjectInfo>
+              </div>
+              <ProjectContent>
+                <p style={{ margin: 0, fontSize: '1rem' }}>{post.short}</p>
+              </ProjectContent>
+              <ProjectInfo style={{ fontSize:'0.9rem' }}>
+                <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/tag.png`}/> {post.skils}
+              </ProjectInfo>
+            </div>
           </ProjectSmallContainer>
         </div>
       );
@@ -147,7 +141,7 @@ const PortfolioHome = () => {
                 </IntroduceContainer>
 
                 <ProjectContainer>
-                  <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 3rem 0'}}>
+                  <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
                       <Title>Projects</Title>
                   </div>
                   {portfolio.map((project) => (
@@ -161,10 +155,23 @@ const PortfolioHome = () => {
                         style={customStyles}
                         contentLabel="Portfolio Details"
                       >
-                        <h1>{selectedPost?.title}</h1>
-                        <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
-                        <button onClick={closeModal}>닫기</button>
-                        {currentUser && <button onClick={() => handleEdit(selectedPost.id)}>수정</button>}
+                        <ModalHeader>
+                          <div style={{display:'flex', alignItems:'center'}}>
+                            <ModalHeaderTitle>프로젝트 소개</ModalHeaderTitle>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center'}}>
+                          {currentUser && <ModalEditButton onClick={() => handleEdit(selectedPost.id)}>포트폴리오 수정</ModalEditButton>}
+                          <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+                          </div>
+                        </ModalHeader>
+                        
+                        <ModalContent>
+                          <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
+                          <ModalContentInfo>{selectedPost?.projectDate} &nbsp; | &nbsp; {selectedPost?.personNum}</ModalContentInfo>
+                          <hr />
+                          <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
+                        </ModalContent>
+
                       </ReactModal>
                     </div>
                   ))}
@@ -268,18 +275,28 @@ const ProjectContainer = styled.div`
 
 const ProjectSmallContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   border: 1px solid black;
   border-radius: 15px;
   margin: 0.5rem 0;
   width: 90%;
   cursor: pointer;
   transition: transform 0.5s ease, box-shadow 0.5s ease; /* 0.5초 동안 확대 애니메이션 */
+  overflow: hidden;
 
   &:hover {
     transform: scale(1.1); /* 중앙 기준 10% 확대 */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
   }
+`;
+
+const ProjectImg = styled.img`
+  width: 18rem;
+  height: 12rem;
+  object-fit: cover; /* cover: 이미지 초과되는 부분 자름 / contain : 초과되는 부분 없이 왜곡시켜 이미지 전부 표시 */
+  object-position: center; /* 이미지를 가운데 정렬 */
+  min-width: 18rem;
+  min-height: 12rem;
 `;
 
 const ProjectTitle = styled.div`
@@ -317,3 +334,86 @@ const ProjectInfoIcon = styled.img`
   height: 1.2rem;
   margin: 0.4rem 0.1rem 0.4rem 0;
 `;
+
+const ModalHeaderTitle = styled.p`
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem;
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: gray;
+  width: 100%;
+  height: 3.5rem;
+  margin: 0 0 0 0;
+`;
+
+const ModalContent = styled.div`
+  height: calc(90vh - 5rem); /* 헤더와의 간격을 고려 */
+  overflow-y: auto; /* 수직 스크롤 활성화 */
+  padding: 1rem;
+
+  /* 스크롤바 스타일 */
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥글게 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* 호버 시 스크롤바 색상 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent; /* 스크롤바 배경 투명 */
+  }
+`;
+
+const ModalCloseButton = styled.button`
+  background-color: gray;
+  color: white;
+  border-radius: 15px;
+  margin: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border: 0px;
+  cursor: pointer;
+
+  &:hover {
+    color: lightgray;
+  }
+`;
+
+const ModalEditButton = styled.button`
+  background-color: gray;
+  color: skyblue;
+  margin: 0.7rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 0px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ModalContentTitle = styled.p`
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.1rem 0 0.1rem 0;
+`;
+
+const ModalContentInfo = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+  color: gray;
+  margin: 0.2rem 0 0.2rem 0;
+`

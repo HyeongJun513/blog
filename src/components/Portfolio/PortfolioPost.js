@@ -12,8 +12,11 @@ const PortfolioPost = () => {
   const [short, setShort] = useState("");
   const [content, setContent] = useState("");
   const [projectDate, setProjectDate] = useState("");
+  const [personNum, setPersonNum] = useState("");
+  const [skils, setSkils] = useState("");
   const [category, setCategory] = useState("Portfolio");
   const [file, setFile] = useState(null);
+  const [coverImg, setCoverImg] = useState("");
   const [preview, setPreview] = useState(false);
   const [previewURL, setPreviewURL] = useState("");
 
@@ -45,9 +48,12 @@ const PortfolioPost = () => {
       content,
       category,
       fileURL,
+      coverImg,
       createdAt: Date.now(),
       uploadTime : new Date().toLocaleString(),
       projectDate,
+      personNum,
+      skils,
     };
 
     await push(postsRef, newPost);
@@ -85,7 +91,7 @@ const PortfolioPost = () => {
       <form onSubmit={handleSubmit} style={{width:'90%'}}>
 
         <CustomDiv style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-          <div>
+          <div style={{textAlign:'left'}}>
           <SmallTitle>카테고리</SmallTitle>
           <CategorySelect value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="Portfolio">포트폴리오</option>
@@ -136,6 +142,28 @@ const PortfolioPost = () => {
         </CustomDiv>
 
         <CustomDiv>
+          <SmallTitle>프로젝트 인원</SmallTitle>
+          <TitleInput
+            type="text"
+            value={personNum}
+            onChange={(e) => setPersonNum(e.target.value)}
+            placeholder="1인, 개인 프로젝트 / 3인, 팀 프로젝트"
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>기술 스택</SmallTitle>
+          <TitleInput
+            type="text"
+            value={skils}
+            onChange={(e) => setSkils(e.target.value)}
+            placeholder="React, React-Native, Typescript, Styled-Components, Css, HTML, JS, Firebase"
+            required
+          />
+        </CustomDiv>
+
+        <CustomDiv>
           <SmallTitle>내용</SmallTitle>
             <ContentTextArea
               value={content}
@@ -143,6 +171,17 @@ const PortfolioPost = () => {
               placeholder="MarkDown 문법으로 포트폴리오 소개"
               required
             />
+        </CustomDiv>
+
+        <CustomDiv>
+          <SmallTitle>대표 이미지</SmallTitle>
+          <TitleInput
+            type="text"
+            value={coverImg}
+            onChange={(e) => setCoverImg(e.target.value)}
+            placeholder="이미지 주소 입력"
+            required
+          />
         </CustomDiv>
 
         <CustomDiv>
