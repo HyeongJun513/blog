@@ -62,17 +62,17 @@ const PortfolioHome = () => {
     }, []);
 
     const printList = (post) => {
-
+//personNum
       return (
         <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProjectSmallContainer onClick={() => openModal(post)}>
-            <ProjectImg alt="Profile" src={`${post.coverImg}`}/>
+            <ProjectImg alt="CoverImg" src={`${post.coverImg}`}/>
             <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'1rem'}}>
               <div>
                 <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
                 <ProjectInfo style={{ fontSize:'0.9rem' }}>
-                  <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
-                  <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate}
+                  <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate} &nbsp;&nbsp;&nbsp;
+                  <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/> {post.personNum}
                 </ProjectInfo>
               </div>
               <ProjectContent>
@@ -140,6 +140,38 @@ const PortfolioHome = () => {
                     </div>
                 </IntroduceContainer>
 
+                <SkilContainer>
+                    <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
+                        <Title>Skils</Title>
+                    </div>
+                    <div style={{display:'flex', flexDirection:'row'}}>
+                      <SkilSmallContainer>
+                        <SkilTitle>Frontend</SkilTitle>
+                        
+                        <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                          <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/HTML.png`}></SkilIcon1></SkilDiv1>
+                          <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/JS.png`}></SkilIcon1></SkilDiv1>
+                        </div>
+                        <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                          <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/Styled-Components.png`}></SkilIcon1></SkilDiv1>
+                          <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/Materialize.png`}></SkilIcon1></SkilDiv1>
+                        </div>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React.png`}></SkilIcon2></SkilDiv2>
+                      </SkilSmallContainer>
+                      <div>
+                      <SkilSmallContainer>
+                        <SkilTitle>Backend</SkilTitle>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Firebase.png`}></SkilIcon2></SkilDiv2>
+                      </SkilSmallContainer>
+                      <SkilSmallContainer>
+                        <SkilTitle>Mobile</SkilTitle>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React-Native.png`}></SkilIcon2></SkilDiv2>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Expo.png`}></SkilIcon2></SkilDiv2>
+                      </SkilSmallContainer>
+                      </div>
+                    </div>
+                </SkilContainer>
+
                 <ProjectContainer>
                   <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
                       <Title>Projects</Title>
@@ -167,7 +199,10 @@ const PortfolioHome = () => {
                         
                         <ModalContent>
                           <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
-                          <ModalContentInfo>{selectedPost?.projectDate} &nbsp; | &nbsp; {selectedPost?.personNum}</ModalContentInfo>
+                          <ModalContentInfo>
+                          <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
+                          |
+                          &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
                           <hr />
                           <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
                         </ModalContent>
@@ -194,7 +229,7 @@ const ProfileImg = styled.img`
 const Title = styled.p`
   font-weight: bold;
   margin: 0 0 0.3rem 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
 `;
 
 const IntroduceContainer = styled.div`
@@ -259,6 +294,93 @@ const GithubButton = styled.p`
   text-decoration: underline;
   color: gray;
   }
+`;
+
+const SkilContainer = styled.div`
+  display: flex;
+  flex-direction : column;
+  align-items: center;
+`;
+
+const SkilSmallContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid gray;
+  border-radius: 5px;
+  margin: 0.5rem 1rem 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+`;
+
+const SkilTitle = styled.p`
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0.3rem 0.2rem 0.5rem 0.2rem;
+  border-bottom: 2px solid gray;
+  width: 80%;
+`;
+
+const SkilDiv1 = styled.div`
+  width: 7rem;
+  height: 7rem;
+  border: 2px solid lightgray;
+  padding: 0.3rem;
+  margin: 0.4rem 0.5rem 0.4rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: transform 0.5s ease, box-shadow 0.5s ease; /* 0.5초 동안 확대 애니메이션 */
+  &:hover {
+    transform: scale(1.1); /* 중앙 기준 10% 확대 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  }
+`;
+
+const SkilDiv2 = styled.div`
+  width: 16rem;
+  height: 5.5rem;
+  border: 2px solid lightgray;
+  padding: 0.3rem;
+  margin: 0.4rem 0.3rem 0.4rem 0.3rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: transform 0.5s ease, box-shadow 0.5s ease; /* 0.5초 동안 확대 애니메이션 */
+  &:hover {
+    transform: scale(1.1); /* 중앙 기준 10% 확대 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  }
+`;
+
+const SkilIcon1 = styled.img`
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain; /* cover: 이미지 초과되는 부분 자름 / contain : 초과되는 부분 없이 왜곡시켜 이미지 전부 표시 */
+  object-position: center; /* 이미지를 가운데 정렬 */
+  min-width: 5rem;
+  min-height: 5rem;
+  margin: 0.2rem;
+`;
+
+const SkilIcon2 = styled.img`
+  width: 11rem;
+  height: 5rem;
+  object-fit: contain; /* cover: 이미지 초과되는 부분 자름 / contain : 초과되는 부분 없이 왜곡시켜 이미지 전부 표시 */
+  object-position: center; /* 이미지를 가운데 정렬 */
+  min-width: 11rem;
+  min-height: 5rem;
+  margin: 0.2rem;
 `;
 
 const ProjectContainer = styled.div`
@@ -411,9 +533,12 @@ const ModalContentTitle = styled.p`
   margin: 0.1rem 0 0.1rem 0;
 `;
 
-const ModalContentInfo = styled.p`
+const ModalContentInfo = styled.div`
   font-size: 1rem;
   font-weight: bold;
   color: gray;
   margin: 0.2rem 0 0.2rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `
