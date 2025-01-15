@@ -79,8 +79,8 @@ const Post = () => {
     currentUser ?
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Title>게시글 작성</Title>
-      <hr style={{width:'90%'}}/>
-      <form onSubmit={handleSubmit} style={{width:'90%'}}>
+      <hr style={{width:'95%'}}/>
+      <form onSubmit={handleSubmit} style={{width:'95%'}}>
 
         <CustomDiv style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
           <div>
@@ -136,10 +136,7 @@ const Post = () => {
         <CustomDiv style={{backgroundColor:'lightgray', width:'calc(100% - 1.1rem)', margin:'0.5rem'}}>
           <FileLink>{previewURL}</FileLink>
         </CustomDiv>
-
-        {/* <CustomDiv style={{alignItems:'flex-end'}}>
-          <PostButton type="submit">게시글 작성</PostButton>
-        </CustomDiv> */}
+        
       </form>
 
       {preview && 

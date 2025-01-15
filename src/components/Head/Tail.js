@@ -43,7 +43,7 @@ const Container = styled.div`
   background-color: lightgray;
   width: 100%;
   height: 8rem;
-  margin: 5rem 0 0 0;
+  margin: 1rem 0 0 0;
   text-align: left;
 //   border-top: 1px solid black;
 `;

@@ -39,8 +39,8 @@ const Category = () => {
       return () => unsubscribe();
     }, []);
 
-    return (
-        <div style={{border: '2px solid black', padding: '0.6rem', borderRadius: 10, backgroundColor:'white', margin: 0}}>
+    return (//border: '2px solid black', 
+        <div style={{border: '2px solid black', padding: '0.6rem', borderRadius: '10px', backgroundColor:'white', margin: 0}}>
             {/* <p style={{margin: '0.5rem'}}>메뉴</p>
             <hr /> */}
             <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체 ({postCounts.all})</CategoryButton>
@@ -50,6 +50,15 @@ const Category = () => {
                 <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
                 <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
                 <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
+                
+                {/* <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
+                <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton> */}
             </CategoryList>
         </div>
     );

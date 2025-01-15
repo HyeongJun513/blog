@@ -150,11 +150,11 @@ const Detail = () => {
   };
 
   return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-      <div style={{width:'90%'}}>
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center', minHeight: 'calc(100vh - 15rem)'}}>
+      <div style={{width:'95%'}}>
 
         {/* 게시글 헤더 */}
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', margin:'0.8rem 0 0.2rem 0'}}>
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', margin:'0 0 0.2rem 0'}}>
           <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
             <CategoryIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/>
             <Category>{post.category}</Category>

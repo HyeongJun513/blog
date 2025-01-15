@@ -35,7 +35,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div style={{minHeight: 'calc(100vh - 15rem)'}}>
     { 
     currentUser ?
     <div>

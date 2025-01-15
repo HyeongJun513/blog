@@ -39,8 +39,8 @@ const Login = () => {
     
   };
 
-  return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+  return ( //calc(100vh - 16rem) : 좌측 사이드메뉴의 높이
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center', minHeight: 'calc(100vh - 15rem)'}}>
       <Title>{currentUser ? "로그아웃" : "로그인"}</Title>
       {currentUser ? (
         // 사용자가 로그인되어 있다면 로그아웃 버튼만 표시
@@ -90,7 +90,7 @@ const Title = styled.p`
 const LoginInput = styled.input`
   font-size: 1rem;
   color: #222222;
-  width: 300px;
+  width: 20rem;
   border: none;
   border-bottom: solid #aaaaaa 1px;
   padding-bottom: 0.2rem;

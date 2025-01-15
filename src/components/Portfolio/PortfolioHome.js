@@ -21,9 +21,11 @@ const customStyles = {
     padding: "0px",
     borderRadius: "10px",
     overflow: "hidden", // 스크롤바가 모달 경계를 넘지 않도록 설정
+    zIndex: 3, // Header 출력 방지
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 흐림 효과
+    zIndex: 2, // Header 출력 방지
   },
 };
 
@@ -62,7 +64,7 @@ const PortfolioHome = () => {
     }, []);
 
     const printList = (post) => {
-//personNum
+
       return (
         <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProjectSmallContainer onClick={() => openModal(post)}>
@@ -119,8 +121,8 @@ const PortfolioHome = () => {
   };
 
     return (
-        <div style={{marginTop:'1rem', display:'flex', flexDirection:'column', alignItems:'center'}}>
-            <div style={{width:'90%'}}>
+        <Container>
+            <div style={{width:'95%', padding:'0 0 1rem 0'}}>
 
                 <IntroduceContainer>
                     <div style={{borderBottom:'1px solid black', width:'100%'}}>
@@ -212,16 +214,23 @@ const PortfolioHome = () => {
                   ))}
                 </ProjectContainer>
             </div>
-        </div>
+        </Container>
     );
 };
 
 export default PortfolioHome;
 
 
+const Container = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const ProfileImg = styled.img`
-  width: 10rem;
-  height: 10rem;
+  width: 15rem;
+  height: 15rem;
   border-radius: 50%;
   margin: 1rem 0 0 0;
 `;
@@ -407,7 +416,7 @@ const ProjectSmallContainer = styled.div`
   overflow: hidden;
 
   &:hover {
-    transform: scale(1.1); /* 중앙 기준 10% 확대 */
+    transform: scale(1.05); /* 중앙 기준 5% 확대 */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
   }
 `;

@@ -87,8 +87,8 @@ const PortfolioPost = () => {
     currentUser ?
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Title>포트폴리오 작성</Title>
-      <hr style={{width:'90%'}}/>
-      <form onSubmit={handleSubmit} style={{width:'90%'}}>
+      <hr style={{width:'95%'}}/>
+      <form onSubmit={handleSubmit} style={{width:'95%'}}>
 
         <CustomDiv style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
           <div style={{textAlign:'left'}}>

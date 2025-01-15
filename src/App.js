@@ -26,21 +26,27 @@ import { AuthProvider } from './components/firebase/AuthContext ';
 const Layout = ({ children }) => {
   return (
     <Container>
-      <div style={{ width: '80%'}}>
+      {/* Header 고정 */}
+      <HeaderContainer>
         <Header />
-        <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'center' }}>
-          <div style={{ flex: 2 }}>
-            <SideMenu />
-          </div>
+      </HeaderContainer>
 
-          {/* <hr style={{ width: '1px', backgroundColor: 'black', border: 'none', marginLeft: 10, marginRight: 10 }} /> */}
+      {/* 본문 레이아웃 */}
+      <MainContent>
+        {/* SideMenu 고정 */}
+        <SideMenuContainer>
+          <SideMenu />
+        </SideMenuContainer>
+        {/* 스크롤 가능한 영역 */}
+        <ScrollableContent>
+          {children}
+        </ScrollableContent>
+      </MainContent>
 
-          <div style={{ flex: 8 }}>
-            {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
-          </div>
-        </div>
-      </div>
-      <Tail/>
+      {/* Footer (Tail) */}
+      <TailContainer>
+        <Tail />
+      </TailContainer>
     </Container>
   );
 };
@@ -106,81 +112,108 @@ export default App;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
-  justify-content: center;
-  // height: 100vh;
-  // background-color: lightgray;
+
+  // display: flex;
+  // flex-direction: column;
+  // width: 100%;
+  // height: 100vh; /* Viewport 전체 높이 */
+  // overflow: hidden; /* 전체 스크롤바를 숨김 */
 `;
 
-{/* <AuthProvider>
-<BrowserRouter basename='/blog'>
-  <Routes>
-    <Route 
-    path='/'
-    element={
-      <Layout>
-        <List />
-      </Layout>
-    }
-    />
-    <Route path='post' element={ //게시글 작성
-        <Layout>
-          <Post />
-        </Layout>
-    }/>
-    <Route path='list' element={ //게시글 목록
-        <Layout>
-          <List />
-        </Layout>
-    }/>
-    <Route path="list/:id" element={ //게시글 조회
-        <Layout>
-          <Detail />
-        </Layout>
-    }/>
-    <Route path="edit/:id" element={ //게시글 수정
-        <Layout>
-          <Edit />
-      </Layout>
-    }/>
-    <Route path='signup' element={ //회원가입
-        <Layout>
-          <SignUp />
-        </Layout>
-    }/>
-    <Route path='login' element={ //로그인 및 로그아웃
-        <Layout>
-          <Login />
-        </Layout>
-    }/>
-    <Route path='portfolio' element={ //포트폴리오
-        <Layout>
-          <PortfolioHome />
-        </Layout>
-    }/>
-    <Route path='portfolio/post' element={ //포트폴리오 게시글 작성
-        <Layout>
-          <PortfolioPost />
-        </Layout>
-    }/>
-    <Route path='portfolio/edit' element={ //포트폴리오 게시글 수정
-        <Layout>
-          <PortfolioEdit />
-        </Layout>
-    }/>
-    <Route path='test1' element={
-        <Layout>
-          <Test />
-        </Layout>
-    }/>
-    <Route path='test2' element={
-        <Layout>
-          <Test2 />
-        </Layout>
-    }/>
-    <Route path='*' element={ //경로가 잘못된 경우 에러페이지 출력
-      <ErrorPage />
-    } />
-  </Routes>
-</BrowserRouter>
-</AuthProvider> */}
+const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+  height: 6rem;
+  z-index: 1; /* 다른 요소 위에 표시, 크기가 클수록 우선순위 */
+  background-color: white; /* 필요 시 배경색 지정 */
+
+  // position: fixed;
+  // top: 0;
+  // left: 10%;
+  // right: 10%;
+  // width: 80%;
+  // height: 6rem;
+  // z-index: 1;
+  // background-color: white;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin-top: 7rem; /* Header 높이만큼 아래로 배치 */
+  width: 80%;
+
+  // display: flex;
+  // flex-direction: row;
+  // margin-top: 6rem; /* Header 높이만큼 아래로 배치 */
+  // flex: 1; /* 남은 공간 차지 */
+  // overflow: hidden; /* 내부에서만 스크롤 제어 */
+`;
+
+const SideMenuContainer = styled.div`
+  position: fixed;
+  top: 7rem; /* Header 높이 아래로 배치 */
+  width: calc(80vw * 0.2); /* 전체 width 80% 중의 20% */
+  height: calc(100vh - 7rem); /* Header, Tail 제외 */
+  overflow-y: auto; /* 내용이 많을 경우 스크롤 가능 */
+  // background-color: lightgray; /* 필요 시 배경색 지정 */
+
+  // width: calc(80vw * 0.2); /* 전체 width 80% 중의 20% */
+  // height: calc(100vh - 6rem - 8rem); /* Header와 Tail 높이를 뺀 공간 */
+  // overflow-y: auto; /* 스크롤 활성화 */
+  // position: sticky; /* 화면을 스크롤해도 고정 */
+  // top: 6rem; /* Header 아래에 고정 */
+  // background-color: white; /* 테스트용 배경색 */
+`;
+
+const ScrollableContent = styled.div`
+  margin-left: calc(80vw * 0.2); /* SideMenu 너비만큼 여백 */
+  width: calc(80vw * 0.8); /* 전체 width 80% 중의 80% */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  border-left: 1px solid lightgray;
+  background-color:
+
+  // width: calc(80vw * 0.8); /* 전체 width 80% 중의 80% */
+  // margin-left: calc(80vw * 0.2); /* SideMenu 너비만큼 여백 */
+  // overflow-y: auto; /* 세로 스크롤 활성화 */
+`;
+
+const TailContainer = styled.div`
+  width: 100%;
+  z-index: 1; /* 다른 요소 위에 표시, 크기가 클수록 우선순위 */
+
+  // height: 8rem;
+  // width: 100%;
+  // background-color: lightgray; /* 테스트용 배경색 */
+  // position: relative;
+  // background-color: skyblue;
+`
+
+
+// // 공통 레이아웃 컴포넌트
+// const Layout = ({ children }) => {
+//   return (
+//     <Container>
+//       <div style={{ width: '80%'}}>
+//         <Header />
+//         <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'center' }}>
+//           <div style={{ flex: 2 }}>
+//             <SideMenu />
+//           </div>
+
+//           <div style={{ flex: 8 }}>
+//             {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
+//           </div>
+//         </div>
+//       </div>
+//       <Tail/>
+//     </Container>
+//   );
+// };
+

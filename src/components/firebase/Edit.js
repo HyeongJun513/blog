@@ -81,7 +81,7 @@ const Edit = () => {
   return (
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Title>게시글 수정</Title>
-      <hr style={{width:'90%'}}/>
+      <hr style={{width:'95%'}}/>
       {currentUser ?
       <form onSubmit={handleSubmit} style={{width:'90%'}}>
 

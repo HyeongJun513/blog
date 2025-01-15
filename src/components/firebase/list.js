@@ -48,7 +48,7 @@ const List = () => {
     };
 
     return (
-    <div style={{width:'90%', display:'flex', flexDirection:'column', alignItems:'start', marginTop: 10}}>
+    <div style={{width:'95%', display:'flex', flexDirection:'column', alignItems:'start'}}>
       <CategoryText>
         {category}
       </CategoryText>
@@ -90,11 +90,11 @@ const List = () => {
   };
 
   return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center', minHeight: 'calc(100vh - 15rem)'}}>
       {printListHeader()}
 
       {posts.map((post) => (
-        <div key={post.id} style={{width:'90%'}}>
+        <div key={post.id} style={{width:'95%'}}>
             {/* <Link to={`/post/${post.id}`}> */}
 
           {category ==='전체' ? //category가 전체인 경우, 전체 게시글 목록 출력
