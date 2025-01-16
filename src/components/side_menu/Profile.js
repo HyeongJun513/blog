@@ -5,10 +5,18 @@ const Profile = () => {
     return (
         <Container>
             <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
-            <Nickname>코딩하는 콘스</Nickname>
-            <Introduce>안녕하세요. 반갑습니다.</Introduce>
-
-            <LinkButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</LinkButton>
+            <div style={{borderBottom:'2px solid lightgray', width:'90%', padding:'0.2rem 0 0.2rem 0'}}>
+              <Nickname>코딩하는 콘스</Nickname>
+              <Name>박형준 (Park Hyeong Jun)</Name>
+            </div>
+            
+            <div style={{borderBottom:'2px solid lightgray', width:'90%', padding:'0.2rem 0 0.2rem 0'}}>
+              <Introduce>안녕하세요. 반갑습니다.</Introduce>
+            </div>
+            {/* <div>
+              <LinkButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</LinkButton>
+              <LinkButton onClick={() => {window.open("https://hyeongjun513.github.io/blog/", "_blank");}}>Website</LinkButton>
+            </div> */}
         </Container>
     );
 };
@@ -27,21 +35,53 @@ const Container = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 100%;
+  width: 90%;
 //   height: 10rem;
   border-radius: 10px;
-  margin: 1rem 0 0 0;
+  margin: 0;
 `;
 
 const Nickname = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin: 0.2rem;
+
+  font-family: "Song Myung", serif;
+  font-weight: bold;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const Introduce = styled.p`
-  font-size: 1rem;
-  margin: 0.2rem;
+const Name = styled.p`
+  font-size: 0.9rem;
+  margin: 0 0 0.4rem 0;
   color: gray;
+
+  font-family: "Song Myung", serif;
+  font-weight: bold;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const Introduce = styled.p`
+  font-size: 1.1rem;
+  margin: 0.2rem;
+
+  font-family: "Song Myung", serif;
+  font-weight: bold;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const LinkButton = styled.button`
@@ -50,7 +90,7 @@ const LinkButton = styled.button`
   background-color: white;
   color: gray;
   border: 0px;
-  margin: 0.3rem 0.3rem 0 0;
+  margin: 0.5rem 0.1rem 0.5rem 0.1rem;
   cursor: pointer;
 
   &:hover {

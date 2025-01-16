@@ -44,17 +44,22 @@ const SideMenu = () => {
           alert("로그아웃 실패!");
         }
       };
-
     const PrintButton = () => {
         if (!currentUser) { //로그아웃 상태인 경우
-            return <SideButton onClick={() => {navigate('/login')}}>로그인</SideButton>
+            return (
+              <ButtonContainer>
+                  <SideButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</SideButton>
+                  <SideButton onClick={() => {window.open("https://hyeongjun513.github.io/blog/", "_blank");}}>Website</SideButton>
+                  <SideButton onClick={() => {navigate('/login')}}>Login</SideButton>
+              </ButtonContainer>
+          )
         } else if (currentUser) { //로그인 상태인 경우
             return (
-                <div>
-                    <SideButton onClick={() => {navigate('/post')}}>게시글 작성</SideButton>
-                    <SideButton onClick={() => {navigate('/portfolio/post')}}>포트폴리오 작성</SideButton>
-                    <SideButton onClick={() => {handleLogout()}}>로그아웃</SideButton>
-                </div>
+                <ButtonContainer>
+                    <SideButton onClick={() => {navigate('/post')}}>Post</SideButton>
+                    <SideButton onClick={() => {navigate('/portfolio/post')}}>Portfolio</SideButton>
+                    <SideButton onClick={() => {handleLogout()}}>Logout</SideButton>
+                </ButtonContainer>
             )
         } else {
             return <p>오류!</p>
@@ -87,17 +92,31 @@ const Container = styled.div`
   // background-color: skyblue;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`
+
 const SideButton = styled.button`
-  padding: 0.3rem 0.6rem 0.3rem 0.6rem;
-  width : 99%;
+  padding: 0.15rem 0.3rem 0.15rem 0.3rem;
+  width : 30%;
   height: auto;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 700;
-  background-color: lightgray;
-  border: 2px solid black;
+  font-size: 0.9rem;
+  font-weight: bold;
+  background-color: white;
+  border: 0px solid black;
   cursor: pointer;
-  margin: 0.2rem 0 0.2rem 0
+  margin: 0 0 0.5rem 0;
+  color: gray;
+
+  font-family: "Song Myung", serif;
+  font-style: normal;
+
+  &: Hover {
+    background-color: lightgray;
+  }
 `;
 
 const VisitorContainer = styled.div`

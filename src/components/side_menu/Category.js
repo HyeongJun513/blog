@@ -13,6 +13,7 @@ const Category = () => {
       reactNative: 0,
       another: 0,
     });
+    const [categoryHidden, setCategoryHidden] = useState(false);
 
     useEffect(() => {
       const db = getDatabase();
@@ -39,55 +40,144 @@ const Category = () => {
       return () => unsubscribe();
     }, []);
 
-    return (//border: '2px solid black', 
-        <div style={{border: '2px solid black', padding: '0.6rem', borderRadius: '10px', backgroundColor:'white', margin: 0}}>
-            {/* <p style={{margin: '0.5rem'}}>메뉴</p>
-            <hr /> */}
-            <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체 ({postCounts.all})</CategoryButton>
-            <hr style={{backgroundColor:'gray', height:'0.1rem', border: 0}}/>
-            <CategoryList>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
-                
-                {/* <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
-                <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton> */}
-            </CategoryList>
-        </div>
+    const changeCategoryHidden = () => {
+      categoryHidden ? setCategoryHidden(false) : setCategoryHidden(true);
+    };
+
+    return ( //▼ ▲
+        <Container>
+          <Title>
+            <NoneDiv>▼</NoneDiv>
+            <TitleFont>카테고리</TitleFont>
+            {categoryHidden ? 
+              <CategoryHiddenButton onClick={() => {changeCategoryHidden()}}>▼</CategoryHiddenButton>
+            :
+              <CategoryHiddenButton onClick={() => {changeCategoryHidden()}}>▲</CategoryHiddenButton>
+            }
+            
+          </Title>
+
+          {categoryHidden ? '' :
+          <CategoryList>
+            <AllCategoryDiv>
+              <AllCategoryIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/>
+              <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체 글 ({postCounts.all})</CategoryButton>
+            </AllCategoryDiv>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
+            
+            {/* <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React-Native'}})}} >React Native ({postCounts.reactNative})</CategoryButton>
+            <CategoryButton onClick={() => {navigate('/list', {state : {category: '기타'}})}}>기타 ({postCounts.another})</CategoryButton> */}
+          </CategoryList>
+          }
+        </Container>
     );
 };
 
 export default Category;
 
+const Container = styled.div`
+  // border: 2px dotted gray;
+  padding: 0.6rem;
+  border-radius: 10px;
+  background-color: white;
+  margin: 1rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Title = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direcion: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid gray;
+  margin: 0 0 0.8rem 0;
+  padding: 0.3rem 0 0.3rem 0;
+`
+
+const TitleFont = styled.div`
+  font-family: "Song Myung", serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+`;
+
+const CategoryHiddenButton = styled.button`
+  background-color: white;
+  margin : 0.1rem;
+  padding: 0 0 0 0;
+  font-size: 1rem;
+  border: 0;
+  color: gray;
+
+  &: Hover {
+    cursor: pointer;
+  }
+`;
+
+const NoneDiv = styled.button`
+  background-color: white;
+  margin : 0.1rem;
+  padding: 0 0 0 0;
+  font-size: 1rem;
+  border: 0;
+  color: white
+`
+
+const CategoryList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  padding: 0 0 0.8rem 0;
+  border-bottom: 2px solid gray;
+`;
+
+const AllCategoryDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.3rem 0;
+  padding: 0 0 0.8rem 0;
+  width: 90%;
+  border-bottom: 3px dotted lightgray;
+`;
+
+const AllCategoryIcon = styled.img`
+  width: 1rem;
+  height: 1rem;
+  filter: opacity(0.8);
+`;
+
 const CategoryButton = styled.button`
-  // padding:5px 10px 5px 10px;
   width: auto;
   height: auto;
   font-size: 1rem;
   font-weight: 700;
   background-color: white;
   border: 0px;
-  margin: 0.5rem;
+  margin: 0.5rem 0 0 0;
   cursor: pointer;
 
   font-family: "Song Myung", serif;
-  font-weight: 400;
+  font-weight: bold;
   font-style: normal;
 
   &:hover {
   text-decoration: underline;
   color: black;
   }
-`;
-
-const CategoryList = styled.div`
-  display: flex;
-  flex-direction: column;
 `;

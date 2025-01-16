@@ -313,6 +313,9 @@ const Category = styled.p`
   font-size: 1.2rem;
   color: #606060;
   font-weight: 600;
+
+  font-family: "Song Myung", serif;
+  font-style: normal;
 `
 
 const CategoryIcon = styled.img`
@@ -339,10 +342,12 @@ const Time = styled.p`
   display: flex;
   // flex-direction: row;
   // text-align: left;
-  margin: 0.8rem 0.4rem 0 0; 
+  margin: 0.4rem 0.4rem 0 0; 
   color: gray; 
   font-weight: 600;
   font-size: 1rem;
+
+  
 `;
 
 const Button_ED = styled.button`
@@ -363,6 +368,9 @@ const Button_ED = styled.button`
 const PostContent = styled.p`
   font-size: 1.2rem;
   text-align: left;
+
+  font-family: "Noto Sans KR", serif;
+  font-style: normal;
 `;
 
 const NoneDiv = styled.div`
@@ -388,7 +396,6 @@ const MovePostButton = styled.button`
   padding: 0.7rem;
 
   &:hover {
-  // text-decoration: underline;
   background-color: lightgray;
   }
 `;
@@ -461,6 +468,9 @@ const CommentTime = styled.p`
   margin: 0.2rem 0.2rem 0.2rem 0.5rem;
   color: gray;
   font-size: 0.8rem;
+
+  font-family: "Noto Sans KR", serif;
+  font-weight: bold;
 `;
 
 const CommentDeletButton = styled.button`
@@ -502,9 +512,10 @@ const NicknameInput = styled.input`
   padding-left: 0.2rem;
   background: none;
   margin: 0 1rem 0 0;
+  font-weight: bold;
 
   &:focus { 
-  outline: none; 
+    outline: none; 
   }
 `;
 
@@ -520,6 +531,9 @@ const CommentTextArea = styled.textarea`
   color: black;
   margin: 0.5rem 0.5rem 0.5rem 0;
   padding: 0.5rem 0 0.5rem 0.3rem;
+
+  font-family: "Noto Sans KR", serif;
+  font-weight: <weight>;
 
   &::placeholder { /* placeholder 스타일 */
     color: #919797; /* 원하는 색상으로 변경 */

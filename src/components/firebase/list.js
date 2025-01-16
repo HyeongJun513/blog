@@ -71,16 +71,16 @@ const List = () => {
       <div style={{display:'flex', flexDirection:'column'}}>
 
         <ListButton onClick={() => {navigate(`/list/${post.id}`, {state : {sortedPosts: posts}})}} >
-          <Title style={{fontSize: '1.5rem'}}>{post.title}</Title>
+          <Title>{post.title}</Title>
         </ListButton>
 
         <Content>
-          <p style={{ margin: 0, fontSize: '1rem' }}>{previewText}</p>
+          <p style={{ margin: 0 }}>{previewText}</p>
         </Content>
 
         <Tail style={{ fontSize:'0.9rem' }}>
-        <TailIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
-        <TailIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {(post.uploadTime).split(' 오후')[0]}
+          <TailIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
+          <TailIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {(post.uploadTime).split(' 오후')[0]}
         </Tail>
 
         <hr style={{width: '100%', margin:'0.3rem 0 0 0'}}/>
@@ -163,13 +163,23 @@ const Content = styled.div`
   background-color: white;
   text-align: left;
   margin: 0.3rem 0 0.3rem 0.2rem;
+
+  font-family: "Noto Sans KR", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-size: 1rem;
 `;
 
 const Title = styled.p`
   color: #2A408E;
-  font-weight: bold;
   margin: 0.2rem 0.2rem 0.2rem -0.2rem; 
   text-align: left;
+
+  // font-family: "Yeon Sung", serif;
+  // font-weight: 400;
+  // font-style: normal;
+  font-size: 1.5rem;
 `;
 
 const Tail = styled.p`
@@ -179,6 +189,10 @@ const Tail = styled.p`
   margin:  0.1rem 0 0 0.2rem; 
   color: gray; 
   font-weight: bold;
+
+  font-family: "Song Myung", serif;
+  // font-weight: 400;
+  font-style: normal;
 `;
 
 const TailIcon = styled.img`

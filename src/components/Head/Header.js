@@ -45,7 +45,7 @@ const MenuButton = styled.button`
   cursor: pointer;
 
   font-family: "Merienda", serif;
-  font-optical-sizing: auto;
+  // font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
 `;

@@ -170,6 +170,25 @@ const SideMenuContainer = styled.div`
   // position: sticky; /* 화면을 스크롤해도 고정 */
   // top: 6rem; /* Header 아래에 고정 */
   // background-color: white; /* 테스트용 배경색 */
+
+  /* 스크롤바 스타일 */
+  &::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: gray; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥글게 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5F5F5F; /* 호버 시 스크롤바 색상 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* 스크롤바 배경 투명 */
+  }
 `;
 
 const ScrollableContent = styled.div`

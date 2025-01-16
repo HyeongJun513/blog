@@ -5,7 +5,7 @@ const Tail = () => {
     return(
         <Container>
             <div style={{width:'80%'}}>
-                <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                <div style={{display:'flex', flexDirection:'row', alignItems:'flex-end'}}>
                     <Text1>팔로우 : </Text1>
                     <LinkButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</LinkButton>
                 </div>
@@ -48,33 +48,47 @@ const Container = styled.div`
 //   border-top: 1px solid black;
 `;
 
-const Text1 = styled.p`
+const Text1 = styled.div`
   color: gray;
-  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 0.85rem;
   font-weight: bold;
   margin: 0;
+
+  font-family: "Song Myung", serif;
 `;
 
 const Text2 = styled.p`
   color: gray;
   font-size: 0.8rem;
   margin: 0.5rem 0 0 0;
+
+  font-family: "Song Myung", serif;
+  font-weight: 400;
 `;
 
 const Text3 = styled.p`
   color: gray;
   font-size: 0.8rem;
   margin: 0.3rem 0 0 0;
+
+  font-family: "Song Myung", serif;
+  font-weight: 400;
 `;
 
 const LinkButton = styled.button`
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: bold;
   color: gray;
   background-color: lightgray;
   border: 0px;
   margin: 0.3rem 0.3rem 0 0;
   cursor: pointer;
+
+  font-family: "Song Myung", serif;
 
   &:hover {
   text-decoration: underline;

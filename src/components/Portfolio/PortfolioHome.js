@@ -72,7 +72,7 @@ const PortfolioHome = () => {
             <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'1rem'}}>
               <div>
                 <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
-                <ProjectInfo style={{ fontSize:'0.9rem' }}>
+                <ProjectInfo style={{ fontSize:'1rem' }}>
                   <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate} &nbsp;&nbsp;&nbsp;
                   <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/> {post.personNum}
                 </ProjectInfo>
@@ -80,7 +80,7 @@ const PortfolioHome = () => {
               <ProjectContent>
                 <p style={{ margin: 0, fontSize: '1rem' }}>{post.short}</p>
               </ProjectContent>
-              <ProjectInfo style={{ fontSize:'0.9rem' }}>
+              <ProjectInfo style={{ fontSize:'1rem' }}>
                 <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/tag.png`}/> {post.skils}
               </ProjectInfo>
             </div>
@@ -202,11 +202,11 @@ const PortfolioHome = () => {
                         <ModalContent>
                           <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
                           <ModalContentInfo>
-                          <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
-                          |
-                          &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
-                          <hr />
-                          <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
+                            <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
+                            |
+                            &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
+                            <hr />
+                            <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
                         </ModalContent>
 
                       </ReactModal>
@@ -431,6 +431,12 @@ const ProjectImg = styled.img`
 `;
 
 const ProjectTitle = styled.div`
+  display: -webkit-box; /* 웹킷 브라우저 호환성 */
+  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
+  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+
   font-weight: bold;
   margin: 0 0 0.3rem 0;
   font-size: 2rem;
@@ -438,14 +444,17 @@ const ProjectTitle = styled.div`
 `;
 
 const ProjectContent = styled.div`
-  // display: -webkit-box; /* 웹킷 브라우저 호환성 */
-  // -webkit-line-clamp: 2; /* 최대 2줄 표시 */
-  // -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
-  // overflow: hidden; /* 넘치는 텍스트 숨김 */
-  // text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+  display: -webkit-box; /* 웹킷 브라우저 호환성 */
+  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
+  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
 
   text-align: center;
   margin: 0.3rem 0 0.3rem 0.2rem;
+
+  font-family: "Noto Sans KR", serif;
+  font-weight: bold;
 `;
 
 const ProjectInfo = styled.p`
@@ -457,9 +466,17 @@ const ProjectInfo = styled.p`
   color: gray; 
   font-weight: bold;
   // background-color: skyblue;
+
+  font-family: "Song Myung", serif;
 `;
 
 const ProjectInfoIcon = styled.img`
+  display: -webkit-box; /* 웹킷 브라우저 호환성 */
+  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
+  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+
   filter: opacity(0.6);
   width: 1.2rem;
   height: 1.2rem;
@@ -489,20 +506,20 @@ const ModalContent = styled.div`
   padding: 1rem;
 
   /* 스크롤바 스타일 */
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 8px; /* 스크롤바 너비 */
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: #888; /* 스크롤바 색상 */
+  &::-webkit-scrollbar-thumb {
+    background: gray; /* 스크롤바 색상 */
     border-radius: 4px; /* 스크롤바 둥글게 */
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* 호버 시 스크롤바 색상 */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #5F5F5F; /* 호버 시 스크롤바 색상 */
   }
 
-  ::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background: transparent; /* 스크롤바 배경 투명 */
   }
 `;
@@ -550,4 +567,6 @@ const ModalContentInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  // font-family: "Song Myung", serif;
 `
