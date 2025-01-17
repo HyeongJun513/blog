@@ -51,7 +51,30 @@ const Layout = ({ children }) => {
   );
 };
 
+const WindowDimensions = () => { //웹 창 크기 인식 //내 컴퓨터 기준, 최대치 1920, 최소치 500
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
 const App = () => {
+  const { width } = WindowDimensions();
+
   const VisitorCount = async () => { //방문자 카운트
     const db = getDatabase();
     const visitorsRef = ref(db, "visitors"); //누적 방문자
@@ -89,18 +112,19 @@ const App = () => {
       <AuthProvider>
         <HashRouter>
           <Routes>
-            <Route path="/" element={<Layout><List /></Layout>} />
-            <Route path="post" element={<Layout><Post /></Layout>} />
-            <Route path="list" element={<Layout><List /></Layout>} />
-            <Route path="list/:id" element={<Layout><Detail /></Layout>} />
-            <Route path="edit/:id" element={<Layout><Edit /></Layout>} />
-            <Route path="signup" element={<Layout><SignUp /></Layout>} />
-            <Route path="login" element={<Layout><Login /></Layout>} />
-            <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
-            <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
-            <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
+          <Route path="/" element={<Layout><List /></Layout>} />
+          <Route path="post" element={<Layout><Post /></Layout>} />
+          <Route path="list" element={<Layout><List /></Layout>} />
+          <Route path="list/:id" element={<Layout><Detail /></Layout>} />
+          <Route path="edit/:id" element={<Layout><Edit /></Layout>} />
+          <Route path="signup" element={<Layout><SignUp /></Layout>} />
+          <Route path="login" element={<Layout><Login /></Layout>} />
+          <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
+          <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
+          <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
+          <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} /> {/* width 테스트 주소 */}
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
         </HashRouter>
       </AuthProvider>
     </div>
@@ -108,6 +132,22 @@ const App = () => {
 };
 
 export default App;
+
+//모바일 UI 테스트
+{/* <Routes>
+  <Route path="/" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="post" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="list" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="list/:id" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="edit/:id" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="signup" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="login" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="portfolio" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="portfolio/post" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="portfolio/edit" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
+  <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width} (현재 모바일)</div>} />
+  <Route path="*" element={<ErrorPage />} />
+</Routes> */}
 
 const Container = styled.div`
   display: flex;
@@ -159,12 +199,12 @@ const MainContent = styled.div`
 const SideMenuContainer = styled.div`
   position: fixed;
   top: 7rem; /* Header 높이 아래로 배치 */
-  width: calc(80vw * 0.2); /* 전체 width 80% 중의 20% */
+  width: calc(80vw * 0.15); /* 전체 width 80% 중의 15% */
   height: calc(100vh - 7rem); /* Header, Tail 제외 */
   overflow-y: auto; /* 내용이 많을 경우 스크롤 가능 */
   // background-color: lightgray; /* 필요 시 배경색 지정 */
 
-  // width: calc(80vw * 0.2); /* 전체 width 80% 중의 20% */
+  // width: calc(80vw * 0.15); /* 전체 width 80% 중의 15% */
   // height: calc(100vh - 6rem - 8rem); /* Header와 Tail 높이를 뺀 공간 */
   // overflow-y: auto; /* 스크롤 활성화 */
   // position: sticky; /* 화면을 스크롤해도 고정 */
@@ -192,11 +232,11 @@ const SideMenuContainer = styled.div`
 `;
 
 const ScrollableContent = styled.div`
-  margin-left: calc(80vw * 0.2); /* SideMenu 너비만큼 여백 */
-  width: calc(80vw * 0.8); /* 전체 width 80% 중의 80% */
+  margin-left: calc(80vw * 0.15); /* SideMenu 너비만큼 여백 */
+  width: calc(80vw * 0.85); /* 전체 width 80% 중의 85% */
   overflow-y: auto; /* 세로 스크롤 활성화 */
   border-left: 1px solid lightgray;
-  background-color:
+  // background-color: green;
 
   // width: calc(80vw * 0.8); /* 전체 width 80% 중의 80% */
   // margin-left: calc(80vw * 0.2); /* SideMenu 너비만큼 여백 */

@@ -33,27 +33,19 @@ const Home = () => {
     return (
         <div style={{backgroundColor:'white', }}>
             <p>게시글 목록 출력 (Home.js)</p>
-            <h3>할일 목록(0116 수정)</h3>
+            <h3>할일 목록(0117 수정)</h3>
             <p>
-                게시글 검색기능, 좌측 프로필이 너무 큰듯? 여백이랑 좀 줄이면 좋을듯
+                게시글 검색기능 추가 고려
                 <br />
                 모바일 전용 UI(웹 창 크기에 따라 Dimencions마냥)
                 <br />
-                등등 기능 추가하기
+                App에서는 innerWidth이용, 기타 컴포넌트 내부에서는 css media 이용하면 될듯?
             </p>
             <div style={{flexDirection:'row'}}>
                 <NumberButton onClick={NumberPlus} > 숫자 + </NumberButton>
                 <NumberButton onClick={NumberMinus} > 숫자 - </NumberButton>
             </div>
             <span style={{fontSize: 50, fontWeight:'bold'}}>{MyText}</span>
-
-            {/* <div style={{flexDirection:'row'}}>
-                <Link to='/post' style={{margin:5}}> Post 이동 </Link>
-                <Link to='/list' style={{margin:5}}> List 이동 </Link>
-                <br/>
-                <Link to='/signup' style={{margin:5}}> SignUp 이동 </Link>
-                <Link to='/login' style={{margin:5}}> Login 이동 </Link>
-            </div> */}
 
             <br/>
             

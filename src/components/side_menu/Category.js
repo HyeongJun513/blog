@@ -89,7 +89,7 @@ const Container = styled.div`
   padding: 0.6rem;
   border-radius: 10px;
   background-color: white;
-  margin: 1rem 0 0 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +97,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  width: 90%;
+  width: 95%;
   display: flex;
   flex-direcion: row;
   align-items: center;
@@ -118,11 +118,11 @@ const CategoryHiddenButton = styled.button`
   background-color: white;
   margin : 0.1rem;
   padding: 0 0 0 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border: 0;
   color: gray;
 
-  &: Hover {
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -131,7 +131,7 @@ const NoneDiv = styled.button`
   background-color: white;
   margin : 0.1rem;
   padding: 0 0 0 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border: 0;
   color: white
 `
@@ -140,7 +140,7 @@ const CategoryList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 95%;
   padding: 0 0 0.8rem 0;
   border-bottom: 2px solid gray;
 `;
@@ -152,7 +152,7 @@ const AllCategoryDiv = styled.div`
   align-items: center;
   margin: 0 0 0.3rem 0;
   padding: 0 0 0.8rem 0;
-  width: 90%;
+  width: 95%;
   border-bottom: 3px dotted lightgray;
 `;
 

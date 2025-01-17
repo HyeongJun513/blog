@@ -85,7 +85,7 @@ const SideMenu = () => {
 export default SideMenu;
 
 const Container = styled.div`
-  padding: 0 calc(80vw * 0.8 * 0.025) 10rem calc(80vw * 0.8 * 0.025);
+  padding: 0 calc(80vw * 0.8 * 0.015) 10rem calc(80vw * 0.8 * 0.015);
   // border: 1px solid black;
   // margin-right: calc(80vw * 0.8 * 0.025);
   // margin-left: calc(80vw * 0.8 * 0.025);
@@ -103,7 +103,7 @@ const SideButton = styled.button`
   padding: 0.15rem 0.3rem 0.15rem 0.3rem;
   width : 30%;
   height: auto;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: bold;
   background-color: white;
   border: 0px solid black;
@@ -126,11 +126,12 @@ const VisitorContainer = styled.div`
   justify-content: center;
   margin: 0.5rem 0 0 0;
 `;
+
 const VisitorText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: bold;
   background-color: gray;
   color: white;

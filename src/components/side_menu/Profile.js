@@ -5,12 +5,13 @@ const Profile = () => {
     return (
         <Container>
             <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
-            <div style={{borderBottom:'2px solid lightgray', width:'90%', padding:'0.2rem 0 0.2rem 0'}}>
+            <div style={{borderBottom:'2px solid lightgray', width:'95%', padding:'0.2rem 0 0.2rem 0'}}>
               <Nickname>코딩하는 콘스</Nickname>
-              <Name>박형준 (Park Hyeong Jun)</Name>
+              <Name style={{marginBottom:'0'}}>박형준</Name>
+              <Name>(Park Hyeong Jun)</Name>
             </div>
             
-            <div style={{borderBottom:'2px solid lightgray', width:'90%', padding:'0.2rem 0 0.2rem 0'}}>
+            <div style={{borderBottom:'2px solid lightgray', width:'95%', padding:'0.2rem 0 0.2rem 0'}}>
               <Introduce>안녕하세요. 반갑습니다.</Introduce>
             </div>
             {/* <div>
@@ -35,7 +36,7 @@ const Container = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  width: 90%;
+  width: 95%;
 //   height: 10rem;
   border-radius: 10px;
   margin: 0;
@@ -56,7 +57,7 @@ const Nickname = styled.p`
 `;
 
 const Name = styled.p`
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin: 0 0 0.4rem 0;
   color: gray;
 
@@ -71,7 +72,7 @@ const Name = styled.p`
 `
 
 const Introduce = styled.p`
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   margin: 0.2rem;
 
   font-family: "Song Myung", serif;

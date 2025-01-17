@@ -17,7 +17,6 @@ const Header = () => {
                 <MenuButton onClick={() => {navigate('/portfolio')}}>Portfolio</MenuButton>
             </div>
         </div>
-        {/* <hr style={{height:'0.15rem', backgroundColor:'gray', border:'0'}}/> */}
         <HR />
     </div>
     );
@@ -34,20 +33,39 @@ const Title = styled.h1`
 `;
 
 const MenuButton = styled.button`
-  padding:5px 10px 5px 10px;
+  padding: 5px 10px;
   min-width: 50px;
-  height: auto;
-  border-radius: 5px;
   font-size: 1.2rem;
-  background-color: lightgray;
-  border: 2px solid;
-  margin: 0 0 0 0.5rem;
+  background-color: white;
+  border: none;
+  margin: 0 0.1rem;
   cursor: pointer;
-
   font-family: "Merienda", serif;
-  // font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
+  color: black;
+
+  position: relative; /* ::after를 기준으로 position 설정 */
+  &:hover {
+    color: gray;
+  }
+
+  /* 밑줄 애니메이션 */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* 버튼의 글씨 바로 아래 */
+    left: 50%; /* 중앙에서 시작 */
+    width: 0%; /* 초기 너비 0% */
+    height: 2px; /* 밑줄 두께 */
+    background-color: gray; /* 밑줄 색상 */
+    transform: translateX(-50%); /* 가운데 정렬 */
+    transition: width 0.3s ease-out; /* 부드러운 확장 애니메이션 */
+  }
+
+  &:hover::after {
+    width: 80%; /* 마우스를 올리면 너비가 버튼 전체로 확장 */
+  }
 `;
 
 const HR = styled.hr`
