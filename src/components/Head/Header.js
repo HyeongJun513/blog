@@ -6,7 +6,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     return (
-    <div style={{}}>
+    <div>
         <div style={{display:'flex', flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between', padding: '1rem 0 0 0'}}>
             <div style={{margin: 0}}>
                 <Title style={{cursor: 'pointer'}} onClick={() => {navigate('/')}} >콘스의 개발 블로그</Title>
@@ -30,6 +30,10 @@ const Title = styled.h1`
   font-style: normal;
   font-size: 2.5rem;
   margin: 0.5rem 0 0 0;
+
+  @media (max-width: 1024px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const MenuButton = styled.button`
@@ -65,6 +69,10 @@ const MenuButton = styled.button`
 
   &:hover::after {
     width: 80%; /* 마우스를 올리면 너비가 버튼 전체로 확장 */
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
   }
 `;
 

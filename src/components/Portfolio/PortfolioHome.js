@@ -7,26 +7,25 @@ import styled from "styled-components";
 import ReactModal from "react-modal";
 import ReactMarkdown from "react-markdown";
 
-// Modal의 스타일을 정의
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)", // 화면 중앙 정렬
-    width: "40vw", // 창 크기
-    height: "90vh",
-    padding: "0px",
-    borderRadius: "10px",
-    overflow: "hidden", // 스크롤바가 모달 경계를 넘지 않도록 설정
-    zIndex: 3, // Header 출력 방지
-  },
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 흐림 효과
-    zIndex: 2, // Header 출력 방지
-  },
+const WindowDimensions = () => { //웹 창 크기 인식
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
 };
 
 const PortfolioHome = () => {
@@ -36,6 +35,30 @@ const PortfolioHome = () => {
 
     const navigate = useNavigate();
     const { currentUser } = useContext(AuthContext); //로그인 사용자 판별
+
+    const { width } = WindowDimensions();
+
+    // Modal의 스타일을 정의
+    const customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)", // 화면 중앙 정렬
+        width: (width<1300) ? (width<1024) ? (width<800) ? (width<600) ? "90vw" : "80vw" : "70vw" : "60vw" : "40vw", // 창 크기
+        height: "90vh",
+        padding: "0px",
+        borderRadius: "10px",
+        overflow: "hidden", // 스크롤바가 모달 경계를 넘지 않도록 설정
+        zIndex: 3, // Header 출력 방지
+      },
+      overlay: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 흐림 효과
+        zIndex: 2, // Header 출력 방지
+      },
+    };
 
     const openModal = (post) => {
       setSelectedPost(post);
@@ -63,8 +86,35 @@ const PortfolioHome = () => {
       return () => unsubscribe();
     }, []);
 
-    const printList = (post) => {
+    //자기소개 : 아이콘, 제목, 내용 출력 함수
+    const Introduce = (alt, Title, Text) => { 
+      const PrintIntroduceIcon = (alt) =>{
+          if (alt === 'person') return <IntroduceIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>;
+          else if (alt === 'birth') return <IntroduceIcon alt="birth" src={`${process.env.PUBLIC_URL}/img/date.png`}/>;
+          else if (alt === 'education') return <IntroduceIcon alt="education" src={`${process.env.PUBLIC_URL}/img/education.png`}/>;
+          else if (alt === 'email') return <IntroduceIcon alt="email" src={`${process.env.PUBLIC_URL}/img/mail.png`}/>;
+          else if (alt === 'location') return <IntroduceIcon alt="location" src={`${process.env.PUBLIC_URL}/img/location.png`}/>;
+          else if (alt === 'github') return <IntroduceIcon alt="github" src={`${process.env.PUBLIC_URL}/img/github.png`}/>;
+          else return <p>Img Error!</p>;
+      };
 
+      return (
+          <IntroduceDiv>
+              {PrintIntroduceIcon(alt)}
+              <div style={{width:'100%'}}>
+                  <IntroduceTitle>{Title}</IntroduceTitle>
+                  {alt === 'github' ? 
+                  <GithubButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GITHUB</GithubButton>
+                  :
+                  <IntroduceText>{Text}</IntroduceText>
+                  }
+              </div>
+          </IntroduceDiv>
+      );
+    };
+
+    //포트폴리오 목록 출력 함수
+    const printList = (post) => {
       return (
         <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProjectSmallContainer onClick={() => openModal(post)}>
@@ -89,130 +139,108 @@ const PortfolioHome = () => {
       );
     };
 
-    const Introduce = (alt, Title, Text) => {
-        const PrintIntroduceIcon = (alt) =>{
-            if (alt === 'person') return <IntroduceIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>;
-            else if (alt === 'birth') return <IntroduceIcon alt="birth" src={`${process.env.PUBLIC_URL}/img/date.png`}/>;
-            else if (alt === 'education') return <IntroduceIcon alt="education" src={`${process.env.PUBLIC_URL}/img/education.png`}/>;
-            else if (alt === 'email') return <IntroduceIcon alt="email" src={`${process.env.PUBLIC_URL}/img/mail.png`}/>;
-            else if (alt === 'location') return <IntroduceIcon alt="location" src={`${process.env.PUBLIC_URL}/img/location.png`}/>;
-            else if (alt === 'github') return <IntroduceIcon alt="github" src={`${process.env.PUBLIC_URL}/img/github.png`}/>;
-            else return <p>Img Error!</p>;
-        };
-
-        return (
-            <IntroduceDiv>
-                {PrintIntroduceIcon(alt)}
-                <div style={{width:'100%'}}>
-                    <IntroduceTitle>{Title}</IntroduceTitle>
-                    {alt === 'github' ? 
-                    <GithubButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GITHUB</GithubButton>
-                    :
-                    <IntroduceText>{Text}</IntroduceText>
-                    }
-                </div>
-            </IntroduceDiv>
-        );
+    // 게시글 수정 함수
+    const handleEdit = (id) => {
+      navigate(`/portfolio/edit`, {state : {id: id}}); // 수정 페이지로 이동
     };
-
-  // 게시글 수정 함수
-  const handleEdit = (id) => {
-    navigate(`/portfolio/edit`, {state : {id: id}}); // 수정 페이지로 이동
-  };
 
     return (
         <Container>
             <div style={{width:'95%', padding:'0 0 1rem 0'}}>
 
-                <IntroduceContainer>
-                    <div style={{borderBottom:'1px solid black', width:'100%'}}>
-                        <Title>About me</Title>
-                    </div>
-                    <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
-                    <DescriptionText>안녕하세요. 신입 개발자 박형준입니다.</DescriptionText>
-                    <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
-                    {Introduce('person','이름','박형준')}
-                    {Introduce('birth','생일','00.05.13')}
-                    {Introduce('education','학력','백석대 컴퓨터공학부')}
-                    </div>
-                    <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
-                    {Introduce('email','이메일','parkhj625@gmail.com')}
-                    {Introduce('location','거주','서울 송파구')}
-                    {Introduce('github','깃허브','링크')}
-                    </div>
-                </IntroduceContainer>
-
-                <SkilContainer>
-                    <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
-                        <Title>Skils</Title>
-                    </div>
-                    <div style={{display:'flex', flexDirection:'row'}}>
-                      <SkilSmallContainer>
-                        <SkilTitle>Frontend</SkilTitle>
-                        
-                        <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
-                          <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/HTML.png`}></SkilIcon1></SkilDiv1>
-                          <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/JS.png`}></SkilIcon1></SkilDiv1>
-                        </div>
-                        <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
-                          <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/Styled-Components.png`}></SkilIcon1></SkilDiv1>
-                          <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/Materialize.png`}></SkilIcon1></SkilDiv1>
-                        </div>
-                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React.png`}></SkilIcon2></SkilDiv2>
-                      </SkilSmallContainer>
-                      <div>
-                      <SkilSmallContainer>
-                        <SkilTitle>Backend</SkilTitle>
-                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Firebase.png`}></SkilIcon2></SkilDiv2>
-                      </SkilSmallContainer>
-                      <SkilSmallContainer>
-                        <SkilTitle>Mobile</SkilTitle>
-                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React-Native.png`}></SkilIcon2></SkilDiv2>
-                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Expo.png`}></SkilIcon2></SkilDiv2>
-                      </SkilSmallContainer>
-                      </div>
-                    </div>
-                </SkilContainer>
-
-                <ProjectContainer>
-                  <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
-                      <Title>Projects</Title>
+              {/* 자기소개 부문 About me */}
+              <IntroduceContainer>
+                  <div style={{borderBottom:'1px solid black', width:'100%'}}>
+                      <Title>About me</Title>
                   </div>
-                  {portfolio.map((project) => (
-                    <div key={project.id} style={{width:'100%'}}>
-                      {printList(project)}
+                  <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
+                  <DescriptionText>안녕하세요. 신입 개발자 박형준입니다.</DescriptionText>
+                  <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                  {Introduce('person','이름','박형준')}
+                  {Introduce('birth','생일','00.05.13')}
+                  {Introduce('education','학력','백석대 컴퓨터공학부')}
+                  </div>
+                  <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                  {Introduce('email','이메일','parkhj625@gmail.com')}
+                  {Introduce('location','거주','서울 송파구')}
+                  {Introduce('github','깃허브','링크')}
+                  </div>
+              </IntroduceContainer>
 
-                      {/* Modal 컴포넌트 */}
-                      <ReactModal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        style={customStyles}
-                        contentLabel="Portfolio Details"
-                      >
-                        <ModalHeader>
-                          <div style={{display:'flex', alignItems:'center'}}>
-                            <ModalHeaderTitle>프로젝트 소개</ModalHeaderTitle>
-                          </div>
-                          <div style={{display:'flex', alignItems:'center'}}>
-                          {currentUser && <ModalEditButton onClick={() => handleEdit(selectedPost.id)}>포트폴리오 수정</ModalEditButton>}
-                          <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
-                          </div>
-                        </ModalHeader>
-                        
-                        <ModalContent>
-                          <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
-                          <ModalContentInfo>
-                            <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
-                            |
-                            &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
-                            <hr />
-                            <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
-                        </ModalContent>
-
-                      </ReactModal>
+              {/* 기술스택 소개 Skils */}
+              <SkilContainer>
+                  <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
+                      <Title>Skils</Title>
+                  </div>
+                  <div style={{display:'flex', flexDirection:'row'}}>
+                    <SkilSmallContainer>
+                      <SkilTitle>Frontend</SkilTitle>
+                      
+                      <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                        <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/HTML.png`}></SkilIcon1></SkilDiv1>
+                        <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/JS.png`}></SkilIcon1></SkilDiv1>
+                      </div>
+                      <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                        <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/Styled-Components.png`}></SkilIcon1></SkilDiv1>
+                        <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/Materialize.png`}></SkilIcon1></SkilDiv1>
+                      </div>
+                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React.png`}></SkilIcon2></SkilDiv2>
+                    </SkilSmallContainer>
+                    <div>
+                    <SkilSmallContainer>
+                      <SkilTitle>Backend</SkilTitle>
+                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Firebase.png`}></SkilIcon2></SkilDiv2>
+                    </SkilSmallContainer>
+                    <SkilSmallContainer>
+                      <SkilTitle>Mobile</SkilTitle>
+                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React-Native.png`}></SkilIcon2></SkilDiv2>
+                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Expo.png`}></SkilIcon2></SkilDiv2>
+                    </SkilSmallContainer>
                     </div>
-                  ))}
-                </ProjectContainer>
+                  </div>
+              </SkilContainer>
+
+              {/* 포트폴리오 부문 및 모달 Projects */}
+              <ProjectContainer>
+                <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
+                    <Title>Projects</Title>
+                </div>
+                {portfolio.map((project) => (
+                  <div key={project.id} style={{width:'100%'}}>
+                    {printList(project)}
+
+                    {/* Modal 컴포넌트 */}
+                    <ReactModal
+                      isOpen={modalIsOpen}
+                      onRequestClose={closeModal}
+                      style={customStyles}
+                      contentLabel="Portfolio Details"
+                    >
+                      <ModalHeader>
+                        <div style={{display:'flex', alignItems:'center'}}>
+                          <ModalHeaderTitle>프로젝트 소개</ModalHeaderTitle>
+                        </div>
+                        <div style={{display:'flex', alignItems:'center'}}>
+                        {currentUser && <ModalEditButton onClick={() => handleEdit(selectedPost.id)}>포트폴리오 수정</ModalEditButton>}
+                        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
+                        </div>
+                      </ModalHeader>
+                      
+                      <ModalContent>
+                        <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
+                        <ModalContentInfo>
+                          <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
+                          |
+                          &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
+                          <hr />
+                          <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
+                      </ModalContent>
+
+                    </ReactModal>
+                  </div>
+                ))}
+              </ProjectContainer>
+
             </div>
         </Container>
     );

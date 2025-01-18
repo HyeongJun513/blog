@@ -316,6 +316,10 @@ const Category = styled.p`
 
   font-family: "Song Myung", serif;
   font-style: normal;
+
+  @media (max-width: 1024px) {
+    font-size: 1rem;
+  }
 `
 
 const CategoryIcon = styled.img`
@@ -323,6 +327,11 @@ const CategoryIcon = styled.img`
   width: 1.4rem;
   height: 1.4rem;
   margin-right: 0.2rem;
+
+  @media (max-width: 1024px) {
+    width: 1rem;
+    height: 1rem;
+  }
 `;
 
 const Title = styled.p`
@@ -330,6 +339,10 @@ const Title = styled.p`
   margin: 0.2rem 0.2rem 0.2rem -0.2rem; 
   text-align: left;
   font-size: 1.5rem;
+
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const HR = styled.hr`
@@ -347,7 +360,9 @@ const Time = styled.p`
   font-weight: 600;
   font-size: 1rem;
 
-  
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Button_ED = styled.button`
@@ -363,6 +378,10 @@ const Button_ED = styled.button`
   // text-decoration: underline;
   background-color: lightgray;
   }
+
+  @media (max-width: 1024px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const PostContent = styled.p`
@@ -371,6 +390,10 @@ const PostContent = styled.p`
 
   font-family: "Noto Sans KR", serif;
   font-style: normal;
+
+  @media (max-width: 1024px) {
+    font-size: 1rem;
+  }
 `;
 
 const NoneDiv = styled.div`
@@ -386,6 +409,10 @@ const NoneDiv = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MovePostButton = styled.button`
@@ -410,6 +437,10 @@ const MovePostText = styled.p`
   -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
   overflow: hidden; /* 넘치는 텍스트 숨김 */
   text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
+
+  @media (max-width: 1024px) {
+    font-size: 1rem;
+  }
 `;
 
 const CommentContainerIcon = styled.img`
@@ -417,6 +448,11 @@ const CommentContainerIcon = styled.img`
   width: 1.8rem;
   height: 1.9rem;
   margin: 0.2rem 0.2rem 0.4rem 0;
+
+  @media (max-width: 1024px) {
+    width: 1.4rem;
+    height: 1.5rem;
+  }
 `;
 
 const TailText = styled.p`
@@ -427,6 +463,10 @@ const TailText = styled.p`
   padding: 0rem 0.5rem 0.2rem 0.5rem;
   border-radius: 10px;
   margin: 0;
+
+  @media (max-width: 1024px) {
+    font-size: 0.6rem;
+  }
 `
 
 const TailTitle = styled.p`
@@ -436,6 +476,10 @@ const TailTitle = styled.p`
   font-family: "Yeon Sung", serif;
   font-weight: 500;
   font-style: normal;
+
+  @media (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const VisitorText = styled.p`
@@ -443,6 +487,10 @@ const VisitorText = styled.p`
   font-size: 0.8rem;
   font-weight: bold;
   color: gray;
+
+  @media (max-width: 1024px) {
+    font-size: 0.6rem;
+  }
 `;
 
 const CommentListContainer = styled.div`
@@ -462,6 +510,11 @@ const CommentNickname = styled.p`
   margin: 0rem 0.5rem 0.2rem 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
+
+  @media (max-width: 1024px) {
+    margin: 0rem 0.3rem 0.2rem 0.5rem;
+    font-size: 1rem;
+  }
 `;
 
 const CommentTime = styled.p`
@@ -471,6 +524,11 @@ const CommentTime = styled.p`
 
   font-family: "Noto Sans KR", serif;
   font-weight: bold;
+
+  @media (max-width: 1024px) {
+    margin: 0.2rem 0.1rem 0.2rem 0.3rem;
+    font-size: 0.5rem;
+  }
 `;
 
 const CommentDeletButton = styled.button`
@@ -479,6 +537,11 @@ const CommentDeletButton = styled.button`
   margin: 0;
   background-color: white;
   cursor: pointer;
+  font-size: 0.9rem;
+
+  @media (max-width: 1024px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const CommentContent = styled.p`
@@ -493,6 +556,11 @@ const CommentContent = styled.p`
   font-family: "Noto Sans KR", serif;
   font-optical-sizing: auto;
   font-style: normal;
+
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
+    padding: 0 0 0 0.4rem;
+  }
 `;
 
 const CommentWriteContainer = styled.div`
@@ -517,6 +585,11 @@ const NicknameInput = styled.input`
   &:focus { 
     outline: none; 
   }
+
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
+    width: 8rem;
+  }
 `;
 
 const CommentTextArea = styled.textarea`
@@ -529,7 +602,7 @@ const CommentTextArea = styled.textarea`
   outline: none;
   background-color: #F3F3F3;
   color: black;
-  margin: 0.5rem 0.5rem 0.5rem 0;
+  margin: 0.5rem 0.4rem 0.5rem 0;
   padding: 0.5rem 0 0.5rem 0.3rem;
 
   font-family: "Noto Sans KR", serif;
@@ -540,6 +613,11 @@ const CommentTextArea = styled.textarea`
     font-weight: bold;
     font-size: 0.9rem;
   }
+
+  @media (max-width: 1024px) {
+    margin: 0.5rem 0 0.5rem 0;
+    font-size: 0.8rem;
+  }
 `;
 
 const CommentIcon = styled.img`
@@ -547,6 +625,11 @@ const CommentIcon = styled.img`
   width: 1.8rem;
   height: 1.8rem;
   margin-bottom: 0.1rem;
+
+  @media (max-width: 1024px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 const CommentButton = styled.button`

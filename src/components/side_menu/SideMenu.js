@@ -36,14 +36,14 @@ const SideMenu = () => {
       }, []);
 
     const handleLogout = async () => { //로그아웃
-        try {
-          await signOut(auth);
-          alert("로그아웃 성공!");
-        } catch (error) {
-          console.error(error);
-          alert("로그아웃 실패!");
-        }
-      };
+      try {
+        await signOut(auth);
+        alert("로그아웃 성공!");
+      } catch (error) {
+        console.error(error);
+        alert("로그아웃 실패!");
+      }
+    };
     const PrintButton = () => {
         if (!currentUser) { //로그아웃 상태인 경우
             return (
@@ -73,10 +73,10 @@ const SideMenu = () => {
           <PrintButton />
           <Category />
           <VisitorContainer>
-            <VisitorText style={{borderBottomRightRadius:'0', borderTopRightRadius:'0'}}>Today</VisitorText>
-            <VisitorText style={{borderBottomLeftRadius:'0', borderTopLeftRadius:'0', backgroundColor:'skyblue', color: 'white'}}>{dailyVisitor}</VisitorText>
-            <VisitorText style={{borderBottomRightRadius:'0', borderTopRightRadius:'0', marginLeft:'1rem'}}>Total</VisitorText>
-            <VisitorText style={{borderBottomLeftRadius:'0', borderTopLeftRadius:'0', backgroundColor:'skyblue', color: 'white'}}>{visitors}</VisitorText>
+            <VisitorTextTitle>Today</VisitorTextTitle>
+            <VisitorTextContent >{dailyVisitor}</VisitorTextContent>
+            <VisitorTextTitle>Total</VisitorTextTitle>
+            <VisitorTextContent>{visitors}</VisitorTextContent>
           </VisitorContainer>
         </Container>
     );
@@ -117,6 +117,11 @@ const SideButton = styled.button`
   &: Hover {
     background-color: lightgray;
   }
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    padding: 0;
+    font-size: 0.5rem;
+  }
 `;
 
 const VisitorContainer = styled.div`
@@ -125,9 +130,15 @@ const VisitorContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0.5rem 0 0 0;
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    margin: 0.2rem 0 0 0;
+  }
 `;
 
-const VisitorText = styled.div`
+//style={{borderBottomRightRadius:'0', borderTopRightRadius:'0'}}
+//style={{borderBottomLeftRadius:'0', borderTopLeftRadius:'0', backgroundColor:'skyblue', color: 'white'}}
+const VisitorTextTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,5 +149,35 @@ const VisitorText = styled.div`
   height: 1.5rem;
   padding: 0 0.4rem 0 0.4rem;
   border-radius: 2px;
-  margin: 0;
+  margin: 0 0 0 0.3rem;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    height: 1.2rem;
+    margin: 0 0 0 0.05rem;
+    font-size: 0.5rem;
+  }
 `
+
+const VisitorTextContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  background-color: skyblue;
+  color: white;
+  height: 1.5rem;
+  padding: 0 0.4rem 0 0.4rem;
+  border-radius: 2px;
+  margin: 0 0.3rem 0 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    height: 1.2rem;
+    margin: 0 0.05rem 0 0;
+    font-size: 0.5rem;
+  }
+`;

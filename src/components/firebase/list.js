@@ -78,7 +78,7 @@ const List = () => {
           <p style={{ margin: 0 }}>{previewText}</p>
         </Content>
 
-        <Tail style={{ fontSize:'0.9rem' }}>
+        <Tail>
           <TailIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/> {post.category} &nbsp;&nbsp;&nbsp;
           <TailIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {(post.uploadTime).split(' 오후')[0]}
         </Tail>
@@ -138,6 +138,10 @@ const CategoryText = styled.div`
   font-style: normal;
   font-size: 2.5rem;
   margin: 0 0 0.3rem 0;
+
+  @media (max-width: 1024px) {
+    font-size: 2.2rem;
+  }
 `;
 
 const DescriptionText = styled.div`
@@ -152,6 +156,10 @@ const DescriptionText = styled.div`
   font-style: normal;
   font-size: 1.7rem;
   margin: 0 0 0.7rem 0;
+
+  @media (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Content = styled.div`
@@ -169,17 +177,21 @@ const Content = styled.div`
   font-weight: <weight>;
   font-style: normal;
   font-size: 1rem;
+
+  @media (max-width: 1024px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Title = styled.p`
   color: #2A408E;
   margin: 0.2rem 0.2rem 0.2rem -0.2rem; 
   text-align: left;
-
-  // font-family: "Yeon Sung", serif;
-  // font-weight: 400;
-  // font-style: normal;
   font-size: 1.5rem;
+
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Tail = styled.p`
@@ -189,10 +201,14 @@ const Tail = styled.p`
   margin:  0.1rem 0 0 0.2rem; 
   color: gray; 
   font-weight: bold;
+  font-size: 0.9rem;
 
   font-family: "Song Myung", serif;
-  // font-weight: 400;
   font-style: normal;
+
+  @media (max-width: 1024px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const TailIcon = styled.img`
@@ -200,4 +216,9 @@ const TailIcon = styled.img`
   width: 1.2rem;
   height: 1.2rem;
   margin: 0.4rem 0.1rem 0.4rem 0;
+
+  @media (max-width: 1024px) {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
 `;

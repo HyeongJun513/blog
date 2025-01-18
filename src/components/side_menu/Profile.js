@@ -54,6 +54,13 @@ const Nickname = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 1600px) and (min-width: 1230px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 1229px) and (min-width: 1025px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Name = styled.p`
@@ -69,6 +76,13 @@ const Name = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 1600px) and (min-width: 1230px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 1229px) and (min-width: 1025px) {
+    font-size: 0.6rem;
+  }
 `
 
 const Introduce = styled.p`
@@ -83,6 +97,10 @@ const Introduce = styled.p`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const LinkButton = styled.button`

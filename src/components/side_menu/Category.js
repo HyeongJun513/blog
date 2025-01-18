@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-do
 import { getDatabase, ref, onValue } from "firebase/database";
 import styled from "styled-components";
 
-const Category = () => {
+const Category = (props) => {
     const navigate = useNavigate();
-
+    
     const [postCounts, setPostCounts] = useState({
       all: 0,
       general: 0,
@@ -13,7 +13,7 @@ const Category = () => {
       reactNative: 0,
       another: 0,
     });
-    const [categoryHidden, setCategoryHidden] = useState(false);
+    const [categoryHidden, setCategoryHidden] = useState(props.isTop ? true : false);
 
     useEffect(() => {
       const db = getDatabase();
@@ -44,11 +44,11 @@ const Category = () => {
       categoryHidden ? setCategoryHidden(false) : setCategoryHidden(true);
     };
 
-    return ( //▼ ▲
+    return (
         <Container>
           <Title>
             <NoneDiv>▼</NoneDiv>
-            <TitleFont>카테고리</TitleFont>
+            <TitleFont>카테고리{props.isTop}</TitleFont>
             {categoryHidden ? 
               <CategoryHiddenButton onClick={() => {changeCategoryHidden()}}>▼</CategoryHiddenButton>
             :
@@ -61,7 +61,7 @@ const Category = () => {
           <CategoryList>
             <AllCategoryDiv>
               <AllCategoryIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/folder.png`}/>
-              <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체 글 ({postCounts.all})</CategoryButton>
+              <CategoryButton onClick={() => {navigate('/list', {state : {category: '전체'}})}} style= {{margin: '0'}}>전체글 ({postCounts.all})</CategoryButton>
             </AllCategoryDiv>
             <CategoryButton onClick={() => {navigate('/list', {state : {category: '일반'}})}}>일반 ({postCounts.general})</CategoryButton>
             <CategoryButton onClick={() => {navigate('/list', {state : {category: 'React'}})}} >React ({postCounts.react})</CategoryButton>
@@ -94,6 +94,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    width: 90%;
+    background-color: lightgray;
+  }
 `;
 
 const Title = styled.div`
@@ -112,6 +117,10 @@ const TitleFont = styled.div`
   font-weight: bold;
   font-size: 1.1rem;
   margin: 0;
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const CategoryHiddenButton = styled.button`
@@ -125,6 +134,13 @@ const CategoryHiddenButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 1024px) {
+    background-color: lightgray;
+  }
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const NoneDiv = styled.button`
@@ -133,7 +149,15 @@ const NoneDiv = styled.button`
   padding: 0 0 0 0;
   font-size: 0.9rem;
   border: 0;
-  color: white
+  color: white;
+
+  @media (max-width: 1024px) {
+    background-color: lightgray;
+    color: lightgray;
+  }
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    font-size: 0.7rem;
+  }
 `
 
 const CategoryList = styled.div`
@@ -153,13 +177,19 @@ const AllCategoryDiv = styled.div`
   margin: 0 0 0.3rem 0;
   padding: 0 0 0.8rem 0;
   width: 95%;
-  border-bottom: 3px dotted lightgray;
+  border-bottom: 3px dotted gray;
 `;
 
 const AllCategoryIcon = styled.img`
   width: 1rem;
   height: 1rem;
   filter: opacity(0.8);
+
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const CategoryButton = styled.button`
@@ -179,5 +209,12 @@ const CategoryButton = styled.button`
   &:hover {
   text-decoration: underline;
   color: black;
+  }
+
+  @media (max-width: 1024px) {
+    background-color: lightgray;
+  }
+  @media (max-width: 1600px) and (min-width: 1025px) {
+    font-size: 0.7rem;
   }
 `;

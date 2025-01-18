@@ -10,6 +10,7 @@ import Test from './components/test';
 import Test2 from './components/test2';
 import ErrorPage from './components/ErrorPage';
 import SideMenu from './components/side_menu/SideMenu';
+import TopMenu from './components/Head/TopMenu';
 import List from './components/firebase/List';
 import Post from './components/firebase/Post';
 import Login from './components/firebase/Login';
@@ -22,21 +23,59 @@ import PortfolioEdit from './components/Portfolio/PortfolioEdit';
 
 import { AuthProvider } from './components/firebase/AuthContext ';
 
+//레이아웃 기준치
+//1600이하 : 글씨크기 조정
+//1024이하 : 사이드메뉴 삭제
+//767이하 : 모바일 UI
+
+const WindowDimensions = () => { //웹 창 크기 인식 //내 컴퓨터 기준, 최대치 1920, 최소치 500
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+};
+
 // 공통 레이아웃 컴포넌트
 const Layout = ({ children }) => {
+  const { width } = WindowDimensions();
+
   return (
     <Container>
       {/* Header 고정 */}
       <HeaderContainer>
         <Header />
+        {/* {width} */}
       </HeaderContainer>
+
+      {/* 모바일, 테블릿 전용 상단 메뉴 */}
+      {width <= 1024 && 
+      <TopMenuContainer>
+        <TopMenu />
+      </TopMenuContainer>}
 
       {/* 본문 레이아웃 */}
       <MainContent>
         {/* SideMenu 고정 */}
+        {width > 1024 && 
         <SideMenuContainer>
           <SideMenu />
         </SideMenuContainer>
+        }
+
         {/* 스크롤 가능한 영역 */}
         <ScrollableContent>
           {children}
@@ -50,27 +89,6 @@ const Layout = ({ children }) => {
     </Container>
   );
 };
-
-const WindowDimensions = () => { //웹 창 크기 인식 //내 컴퓨터 기준, 최대치 1920, 최소치 500
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowDimensions;
-}
 
 const App = () => {
   const { width } = WindowDimensions();
@@ -112,19 +130,19 @@ const App = () => {
       <AuthProvider>
         <HashRouter>
           <Routes>
-          <Route path="/" element={<Layout><List /></Layout>} />
-          <Route path="post" element={<Layout><Post /></Layout>} />
-          <Route path="list" element={<Layout><List /></Layout>} />
-          <Route path="list/:id" element={<Layout><Detail /></Layout>} />
-          <Route path="edit/:id" element={<Layout><Edit /></Layout>} />
-          <Route path="signup" element={<Layout><SignUp /></Layout>} />
-          <Route path="login" element={<Layout><Login /></Layout>} />
-          <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
-          <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
-          <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
-          <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} /> {/* width 테스트 주소 */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+            <Route path="/" element={<Layout><List /></Layout>} />
+            <Route path="post" element={<Layout><Post /></Layout>} />
+            <Route path="list" element={<Layout><List /></Layout>} />
+            <Route path="list/:id" element={<Layout><Detail /></Layout>} />
+            <Route path="edit/:id" element={<Layout><Edit /></Layout>} />
+            <Route path="signup" element={<Layout><SignUp /></Layout>} />
+            <Route path="login" element={<Layout><Login /></Layout>} />
+            <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
+            <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
+            <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
+            <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} /> {/* width 테스트 주소 */}
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
         </HashRouter>
       </AuthProvider>
     </div>
@@ -135,18 +153,18 @@ export default App;
 
 //모바일 UI 테스트
 {/* <Routes>
-  <Route path="/" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="post" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="list" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="list/:id" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="edit/:id" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="signup" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="login" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="portfolio" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="portfolio/post" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="portfolio/edit" element={<Layout><p style={{marginTop:'10rem', fontSize:'3rem'}}>모바일 UI 입니다.</p></Layout>} />
-  <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width} (현재 모바일)</div>} />
-  <Route path="*" element={<ErrorPage />} />
+<Route path="/" element={<Layout1024>{width}<List /></Layout1024>} />
+<Route path="post" element={<Layout1024><Post /></Layout1024>} />
+<Route path="list" element={<Layout1024><List /></Layout1024>} />
+<Route path="list/:id" element={<Layout1024><Detail /></Layout1024>} />
+<Route path="edit/:id" element={<Layout1024><Edit /></Layout1024>} />
+<Route path="signup" element={<Layout1024><SignUp /></Layout1024>} />
+<Route path="login" element={<Layout1024><Login /></Layout1024>} />
+<Route path="portfolio" element={<Layout1024><PortfolioHome /></Layout1024>} />
+<Route path="portfolio/post" element={<Layout1024><PortfolioPost /></Layout1024>} />
+<Route path="portfolio/edit" element={<Layout1024><PortfolioEdit /></Layout1024>} />
+<Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} />}
+<Route path="*" element={<ErrorPage />} />
 </Routes> */}
 
 const Container = styled.div`
@@ -154,12 +172,6 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-
-  // display: flex;
-  // flex-direction: column;
-  // width: 100%;
-  // height: 100vh; /* Viewport 전체 높이 */
-  // overflow: hidden; /* 전체 스크롤바를 숨김 */
 `;
 
 const HeaderContainer = styled.div`
@@ -172,14 +184,15 @@ const HeaderContainer = styled.div`
   z-index: 1; /* 다른 요소 위에 표시, 크기가 클수록 우선순위 */
   background-color: white; /* 필요 시 배경색 지정 */
 
-  // position: fixed;
-  // top: 0;
-  // left: 10%;
-  // right: 10%;
-  // width: 80%;
-  // height: 6rem;
-  // z-index: 1;
-  // background-color: white;
+  @media (max-width: 1024px) {
+    height: 5rem;
+  }
+`;
+
+const TopMenuContainer = styled.div`
+  width: 80%;
+  // height: 5rem;
+  margin: 7rem 0 0 0;
 `;
 
 const MainContent = styled.div`
@@ -189,11 +202,9 @@ const MainContent = styled.div`
   margin-top: 7rem; /* Header 높이만큼 아래로 배치 */
   width: 80%;
 
-  // display: flex;
-  // flex-direction: row;
-  // margin-top: 6rem; /* Header 높이만큼 아래로 배치 */
-  // flex: 1; /* 남은 공간 차지 */
-  // overflow: hidden; /* 내부에서만 스크롤 제어 */
+  @media (max-width: 1024px) {
+    margin-top: 1rem;
+  }
 `;
 
 const SideMenuContainer = styled.div`
@@ -202,14 +213,6 @@ const SideMenuContainer = styled.div`
   width: calc(80vw * 0.15); /* 전체 width 80% 중의 15% */
   height: calc(100vh - 7rem); /* Header, Tail 제외 */
   overflow-y: auto; /* 내용이 많을 경우 스크롤 가능 */
-  // background-color: lightgray; /* 필요 시 배경색 지정 */
-
-  // width: calc(80vw * 0.15); /* 전체 width 80% 중의 15% */
-  // height: calc(100vh - 6rem - 8rem); /* Header와 Tail 높이를 뺀 공간 */
-  // overflow-y: auto; /* 스크롤 활성화 */
-  // position: sticky; /* 화면을 스크롤해도 고정 */
-  // top: 6rem; /* Header 아래에 고정 */
-  // background-color: white; /* 테스트용 배경색 */
 
   /* 스크롤바 스타일 */
   &::-webkit-scrollbar {
@@ -236,43 +239,18 @@ const ScrollableContent = styled.div`
   width: calc(80vw * 0.85); /* 전체 width 80% 중의 85% */
   overflow-y: auto; /* 세로 스크롤 활성화 */
   border-left: 1px solid lightgray;
-  // background-color: green;
 
-  // width: calc(80vw * 0.8); /* 전체 width 80% 중의 80% */
-  // margin-left: calc(80vw * 0.2); /* SideMenu 너비만큼 여백 */
-  // overflow-y: auto; /* 세로 스크롤 활성화 */
+  // 창 크기별 디자인
+  // @media (max-width: 1024px) and (min-width: 767px) {
+  @media (max-width: 1024px) {
+    margin-left: 0;
+    width: calc(80vw);
+    border-right: 1px solid lightgray;
+  }
 `;
 
 const TailContainer = styled.div`
   width: 100%;
   z-index: 1; /* 다른 요소 위에 표시, 크기가 클수록 우선순위 */
-
-  // height: 8rem;
-  // width: 100%;
-  // background-color: lightgray; /* 테스트용 배경색 */
-  // position: relative;
-  // background-color: skyblue;
-`
-
-
-// // 공통 레이아웃 컴포넌트
-// const Layout = ({ children }) => {
-//   return (
-//     <Container>
-//       <div style={{ width: '80%'}}>
-//         <Header />
-//         <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'center' }}>
-//           <div style={{ flex: 2 }}>
-//             <SideMenu />
-//           </div>
-
-//           <div style={{ flex: 8 }}>
-//             {children}  {/* 이 부분에서 각 페이지 컴포넌트를 렌더링 */}
-//           </div>
-//         </div>
-//       </div>
-//       <Tail/>
-//     </Container>
-//   );
-// };
+`;
 
