@@ -7,7 +7,7 @@ const Tail = () => {
             <div style={{width:'80%'}}>
                 <div style={{display:'flex', flexDirection:'row', alignItems:'flex-end'}}>
                     <Text1>팔로우 : </Text1>
-                    <LinkButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</LinkButton>
+                    <LinkButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GITHUB</LinkButton>
                 </div>
                 <Text2>© 2025. Park Hyeong Jun. All rights reserved.</Text2>
                 <Text3>

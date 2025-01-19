@@ -48,7 +48,7 @@ const SideMenu = () => {
         if (!currentUser) { //로그아웃 상태인 경우
             return (
               <ButtonContainer>
-                  <SideButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHUB</SideButton>
+                  <SideButton onClick={() => {window.open("https://github.com/HyeongJun513", "_blank");}}>GitHub</SideButton>
                   <SideButton onClick={() => {window.open("https://hyeongjun513.github.io/blog/", "_blank");}}>Website</SideButton>
                   <SideButton onClick={() => {navigate('/login')}}>Login</SideButton>
               </ButtonContainer>

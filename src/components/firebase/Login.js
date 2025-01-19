@@ -44,19 +44,19 @@ const Login = () => {
       <Title>{currentUser ? "로그아웃" : "로그인"}</Title>
       {currentUser ? (
         // 사용자가 로그인되어 있다면 로그아웃 버튼만 표시
-        <div style={{display:'flex', flexDirection:'row', alignItems:'center', padding:'2rem', border:'1px solid black'}}>
+        <div style={{display:'flex', flexDirection:'row', alignItems:'center', padding:'1.5rem', border:'1px solid black'}}>
           <LoginButton onClick={handleLogout} style={{margin:'0 1.5rem 0 0'}}>로그아웃</LoginButton>
           <LoginButton onClick={() => {navigate('/signup')}} style={{margin:0}}>회원가입</LoginButton>
         </div>
       ) : (
         // 사용자가 로그인되어 있지 않다면 로그인 폼 표시
-        <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column', alignItems:'center', padding:'3rem', border:'1px solid black'}}> {/* form 태그 사용 */}
+        <FormStyle onSubmit={handleSubmit}> {/* form 태그 사용 */}
 
           <div style={{display:'flex', flexDirection:'row', alignItems:'flex-start', margin:'0.5rem 0 1rem 0'}}>
             <LoginIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>
             <LoginInput
               type="email"
-              placeholder="이메일"
+              placeholder="아이디"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -71,7 +71,7 @@ const Login = () => {
           </div>
 
           <LoginButton type="submit">로그인</LoginButton>
-        </form>
+        </FormStyle>
       )}
     </div>
   );
@@ -85,7 +85,23 @@ const Title = styled.p`
   font-style: normal;
   font-size: 2.5rem;
   margin: 3rem 0 0.5rem 0;
+
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
+//style={{display:'flex', flexDirection:'column', alignItems:'center', padding:'2rem', border:'1px solid black'}}
+const FormStyle = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  border: 1px solid black;
+
+  @media (max-width: 600px) {
+    padding: 1.5rem
+  }
+`
 
 const LoginInput = styled.input`
   font-size: 1rem;
@@ -93,13 +109,21 @@ const LoginInput = styled.input`
   width: 20rem;
   border: none;
   border-bottom: solid #aaaaaa 1px;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.1rem;
   padding-left: 0.2rem;
   background: none;
   margin: 0.4rem 0 1rem 0.2rem;
 
+  font-family: "Noto Sans KR", serif;
+  font-weight: bold;
+
   &:focus { 
   outline: none; 
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.7rem;
+    width: 12rem;
   }
 `;
 
@@ -107,6 +131,12 @@ const LoginIcon = styled.img`
   filter: opacity(0.6);
   width: 2rem;
   height: 2rem;
+  margin: 0.2rem 0 0 0;
+
+  @media (max-width: 600px) {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -127,5 +157,11 @@ const LoginButton = styled.button`
 
   &:hover {
   background-color: #7cc6e3;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.7rem;
+    width: 5rem;
+    height: 2rem;
   }
 `;

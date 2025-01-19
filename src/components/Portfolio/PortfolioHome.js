@@ -118,19 +118,19 @@ const PortfolioHome = () => {
       return (
         <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProjectSmallContainer onClick={() => openModal(post)}>
-            <ProjectImg alt="CoverImg" src={`${post.coverImg}`}/>
+            {width >900 && <ProjectImg alt="CoverImg" src={`${post.coverImg}`}/>}
             <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'1rem'}}>
               <div>
-                <ProjectTitle style={{fontSize: '1.5rem'}}>{post.title}</ProjectTitle>
-                <ProjectInfo style={{ fontSize:'1rem' }}>
+                <ProjectTitle>{post.title}</ProjectTitle>
+                <ProjectInfo>
                   <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/> {post.projectDate} &nbsp;&nbsp;&nbsp;
                   <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/> {post.personNum}
                 </ProjectInfo>
               </div>
               <ProjectContent>
-                <p style={{ margin: 0, fontSize: '1rem' }}>{post.short}</p>
+                {post.short}
               </ProjectContent>
-              <ProjectInfo style={{ fontSize:'1rem' }}>
+              <ProjectInfo>
                 <ProjectInfoIcon alt="folder" src={`${process.env.PUBLIC_URL}/img/tag.png`}/> {post.skils}
               </ProjectInfo>
             </div>
@@ -148,6 +148,7 @@ const PortfolioHome = () => {
         <Container>
             <div style={{width:'95%', padding:'0 0 1rem 0'}}>
 
+              {/* ====================================== */}
               {/* 자기소개 부문 About me */}
               <IntroduceContainer>
                   <div style={{borderBottom:'1px solid black', width:'100%'}}>
@@ -155,27 +156,56 @@ const PortfolioHome = () => {
                   </div>
                   <ProfileImg alt="Profile" src={`${process.env.PUBLIC_URL}/img/Profile.png`}/>
                   <DescriptionText>안녕하세요. 신입 개발자 박형준입니다.</DescriptionText>
-                  <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
-                  {Introduce('person','이름','박형준')}
-                  {Introduce('birth','생일','00.05.13')}
-                  {Introduce('education','학력','백석대 컴퓨터공학부')}
-                  </div>
-                  <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
-                  {Introduce('email','이메일','parkhj625@gmail.com')}
-                  {Introduce('location','거주','서울 송파구')}
-                  {Introduce('github','깃허브','링크')}
-                  </div>
+                  {width<600 ? //600 미만인 경우 (1줄로 출력)
+                    <div>
+                      {Introduce('person','이름','박형준')}
+                      {Introduce('birth','생일','00.05.13')}
+                      {Introduce('education','학력','백석대 컴퓨터공학부')}
+                      {Introduce('email','이메일','parkhj625@gmail.com')}
+                      {Introduce('location','거주','서울 송파구')}
+                      {Introduce('github','깃허브','링크')}
+                    </div>
+                  : width < 850 ? //600 이상, 850 미만인 경우 (2줄로 출력)
+                    <div>
+                      <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                      {Introduce('person','이름','박형준')}
+                      {Introduce('birth','생일','00.05.13')}
+                      </div>
+                      <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                      {Introduce('education','학력','백석대 컴퓨터공학부')}
+                      {Introduce('email','이메일','parkhj625@gmail.com')}
+                      </div>
+                      <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                      {Introduce('location','거주','서울 송파구')}
+                      {Introduce('github','깃허브','링크')}
+                      </div>
+                    </div>
+                  : //850이상인 경우 (3줄로 출력)
+                    <div>
+                      <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                      {Introduce('person','이름','박형준')}
+                      {Introduce('birth','생일','00.05.13')}
+                      {Introduce('education','학력','백석대 컴퓨터공학부')}
+                      </div>
+                      <div style={{display:'flex', flexDirection:'row', width:'100%', alignItems:'center', justifyContent:'center'}}>
+                      {Introduce('email','이메일','parkhj625@gmail.com')}
+                      {Introduce('location','거주','서울 송파구')}
+                      {Introduce('github','깃허브','링크')}
+                      </div>
+                    </div>
+                  }
               </IntroduceContainer>
 
+              {/* ====================================== */}
               {/* 기술스택 소개 Skils */}
               <SkilContainer>
                   <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
                       <Title>Skils</Title>
                   </div>
-                  <div style={{display:'flex', flexDirection:'row'}}>
+                  <SkilMediaContainer>
+
                     <SkilSmallContainer>
                       <SkilTitle>Frontend</SkilTitle>
-                      
                       <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
                         <SkilDiv1><SkilIcon1 alt="HTML" src={`${process.env.PUBLIC_URL}/img/HTML.png`}></SkilIcon1></SkilDiv1>
                         <SkilDiv1><SkilIcon1 alt="JS" src={`${process.env.PUBLIC_URL}/img/JS.png`}></SkilIcon1></SkilDiv1>
@@ -186,20 +216,24 @@ const PortfolioHome = () => {
                       </div>
                       <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React.png`}></SkilIcon2></SkilDiv2>
                     </SkilSmallContainer>
+
                     <div>
-                    <SkilSmallContainer>
-                      <SkilTitle>Backend</SkilTitle>
-                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Firebase.png`}></SkilIcon2></SkilDiv2>
-                    </SkilSmallContainer>
-                    <SkilSmallContainer>
-                      <SkilTitle>Mobile</SkilTitle>
-                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React-Native.png`}></SkilIcon2></SkilDiv2>
-                      <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Expo.png`}></SkilIcon2></SkilDiv2>
-                    </SkilSmallContainer>
+                      <SkilSmallContainer>
+                        <SkilTitle>Backend</SkilTitle>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Firebase.png`}></SkilIcon2></SkilDiv2>
+                      </SkilSmallContainer>
+
+                      <SkilSmallContainer>
+                        <SkilTitle>Mobile</SkilTitle>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/React-Native.png`}></SkilIcon2></SkilDiv2>
+                        <SkilDiv2><SkilIcon2 alt="React" src={`${process.env.PUBLIC_URL}/img/Expo.png`}></SkilIcon2></SkilDiv2>
+                      </SkilSmallContainer>
                     </div>
-                  </div>
+
+                  </SkilMediaContainer>
               </SkilContainer>
 
+              {/* ====================================== */}
               {/* 포트폴리오 부문 및 모달 Projects */}
               <ProjectContainer>
                 <div style={{borderBottom:'1px solid black', width:'100%', margin:'3rem 0 1rem 0'}}>
@@ -229,9 +263,9 @@ const PortfolioHome = () => {
                       <ModalContent>
                         <ModalContentTitle>{selectedPost?.title}</ModalContentTitle>
                         <ModalContentInfo>
-                          <ProjectInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
+                          <ModalInfoIcon alt="date" src={`${process.env.PUBLIC_URL}/img/date.png`}/>{selectedPost?.projectDate} &nbsp;
                           |
-                          &nbsp; <ProjectInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
+                          &nbsp; <ModalInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
                           <hr />
                           <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
                       </ModalContent>
@@ -261,6 +295,11 @@ const ProfileImg = styled.img`
   height: 15rem;
   border-radius: 50%;
   margin: 1rem 0 0 0;
+
+  @media (max-width: 600px) {
+    width: 10rem;
+    height: 10rem;
+  }
 `;
 
 const Title = styled.p`
@@ -287,6 +326,10 @@ const DescriptionText = styled.div`
   font-style: normal;
   font-size: 1.5rem;
   margin: 0.5rem 0 0.5rem 0;
+
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const IntroduceDiv = styled.div`
@@ -339,6 +382,15 @@ const SkilContainer = styled.div`
   align-items: center;
 `;
 
+const SkilMediaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+`;
+
 const SkilSmallContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -356,6 +408,10 @@ const SkilTitle = styled.p`
   margin: 0.3rem 0.2rem 0.5rem 0.2rem;
   border-bottom: 2px solid gray;
   width: 80%;
+
+  @media (max-width: 850px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const SkilDiv1 = styled.div`
@@ -377,6 +433,11 @@ const SkilDiv1 = styled.div`
     transform: scale(1.1); /* 중앙 기준 10% 확대 */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
   }
+
+  @media (max-width: 850px) {
+    width: 5rem;
+    height: 5rem;
+  }
 `;
 
 const SkilDiv2 = styled.div`
@@ -397,6 +458,11 @@ const SkilDiv2 = styled.div`
   &:hover {
     transform: scale(1.1); /* 중앙 기준 10% 확대 */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  }
+  
+  @media (max-width: 850px) {
+    width: 12rem;
+    height: 4rem;
   }
 `;
 
@@ -467,8 +533,12 @@ const ProjectTitle = styled.div`
 
   font-weight: bold;
   margin: 0 0 0.3rem 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #2A408E;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const ProjectContent = styled.div`
@@ -479,10 +549,16 @@ const ProjectContent = styled.div`
   text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
 
   text-align: center;
-  margin: 0.3rem 0 0.3rem 0.2rem;
+  margin: 0.2rem 0 0.2rem 0;
 
   font-family: "Noto Sans KR", serif;
   font-weight: bold;
+  font-size: 1rem;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2; /* 최대 1줄 표시 */
+  }
 `;
 
 const ProjectInfo = styled.p`
@@ -490,32 +566,42 @@ const ProjectInfo = styled.p`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin:  0.1rem 0 0 0.2rem; 
+  margin: 0.1rem 0 0 0.2rem; 
   color: gray; 
   font-weight: bold;
-  // background-color: skyblue;
 
   font-family: "Song Myung", serif;
+  font-size: 1rem;
+  
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ProjectInfoIcon = styled.img`
-  display: -webkit-box; /* 웹킷 브라우저 호환성 */
-  -webkit-line-clamp: 1; /* 최대 1줄 표시 */
-  -webkit-box-orient: vertical; /* 텍스트 방향 설정 */
-  overflow: hidden; /* 넘치는 텍스트 숨김 */
-  text-overflow: ellipsis; /* 넘칠 경우 생략 표시 */
-
   filter: opacity(0.6);
   width: 1.2rem;
   height: 1.2rem;
   margin: 0.4rem 0.1rem 0.4rem 0;
-`;
 
+  @media (max-width: 600px) {
+    width: 1rem;
+    height: 1rem;
+  }
+`;
+//1300, 1024, 800, 600
 const ModalHeaderTitle = styled.p`
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0.5rem;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const ModalHeader = styled.div`
@@ -550,6 +636,14 @@ const ModalContent = styled.div`
   &::-webkit-scrollbar-track {
     background: transparent; /* 스크롤바 배경 투명 */
   }
+  
+  font-size: 1rem;
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ModalCloseButton = styled.button`
@@ -565,6 +659,13 @@ const ModalCloseButton = styled.button`
   &:hover {
     color: lightgray;
   }
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.6rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const ModalEditButton = styled.button`
@@ -579,12 +680,42 @@ const ModalEditButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.1rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 const ModalContentTitle = styled.p`
   font-size: 2rem;
   font-weight: bold;
   margin: 0.1rem 0 0.1rem 0;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.8rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
+`;
+
+const ModalInfoIcon = styled.img`
+  filter: opacity(0.6);
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.2rem 0.2rem 0 0;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    margin: 0.1rem 0.2rem 0 0;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    margin: 0.1rem 0.2rem 0 0;
+    font-size: 0.8rem;
+  }
 `;
 
 const ModalContentInfo = styled.div`
@@ -596,5 +727,10 @@ const ModalContentInfo = styled.div`
   flex-direction: row;
   align-items: center;
 
-  // font-family: "Song Myung", serif;
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `
