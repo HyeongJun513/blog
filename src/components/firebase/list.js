@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
 import styled from "styled-components";
 import { marked } from "marked"; //markdown을 html 방식으로 변환하는 모듈
+// import { Helmet } from "react-helmet";
 
 const List = () => {
   const [posts, setPosts] = useState([]);
