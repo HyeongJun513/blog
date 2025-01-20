@@ -4,13 +4,13 @@ import { getStorage } from "firebase/storage";
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "MY-Key",
+  apiKey: "AIzaSyAaduAavCCwknw0P-0nbjjFGHY7TEpnGqo",
   authDomain: "parkdevblog.firebaseapp.com",
   projectId: "parkdevblog",
   storageBucket: "parkdevblog.firebasestorage.app",
-  messagingSenderId: "Number",
-  appId: "1:Number:web:Number",
-  measurementId: "G-ID"
+  messagingSenderId: "624615678260",
+  appId: "1:624615678260:web:bb36fe75e98d73bc9e0561",
+  measurementId: "G-RQ3LNFLW9S"
 };
 
 const app = initializeApp(firebaseConfig);
