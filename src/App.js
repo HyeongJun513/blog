@@ -140,6 +140,15 @@ const App = () => {
             <Route path="portfolio" element={<Layout><PortfolioHome /></Layout>} />
             <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
             <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
+            <Route //Google SEO HTML 인증 
+              path="googleXYZ.html"
+              element={
+                <meta
+                  http-equiv="refresh"
+                  content="0; url=https://hyeongjun513.github.io/blog/google5456435b0540cd8d.html"
+                />
+              }
+            />
             <Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} /> {/* width 테스트 주소 */}
             <Route path="*" element={<ErrorPage />} />
           </Routes>
