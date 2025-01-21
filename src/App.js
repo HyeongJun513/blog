@@ -141,7 +141,7 @@ const App = () => {
             <Route path="portfolio/post" element={<Layout><PortfolioPost /></Layout>} />
             <Route path="portfolio/edit" element={<Layout><PortfolioEdit /></Layout>} />
             <Route //Google SEO HTML 인증 
-              path="googleXYZ.html"
+              path="google5456435b0540cd8d.html"
               element={
                 <meta
                   http-equiv="refresh"
