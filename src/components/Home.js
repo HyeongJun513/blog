@@ -37,7 +37,7 @@ const Home = () => {
             <p>
                 게시글 검색기능 추가 고려
                 <br />
-                모바일 전용 UI(웹 창 크기에 따라 Dimencions마냥)
+                이제 뭐하지....
                 <br />
                 App에서는 innerWidth이용, 기타 컴포넌트 내부에서는 css media 이용하면 될듯?
             </p>

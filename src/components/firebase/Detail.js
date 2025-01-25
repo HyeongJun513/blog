@@ -359,9 +359,11 @@ const Time = styled.p`
   color: gray; 
   font-weight: 600;
   font-size: 1rem;
-
-  @media (max-width: 1024px) {
+  @media (max-width: 1024px) and (min-width: 501px) {
     font-size: 0.8rem;
+  }
+  @media (max-width: 500px) {
+    font-size: 0.6rem;
   }
 `;
 

@@ -90,7 +90,7 @@ const Title = styled.p`
     font-size: 2rem;
   }
 `;
-//style={{display:'flex', flexDirection:'column', alignItems:'center', padding:'2rem', border:'1px solid black'}}
+
 const FormStyle = styled.form`
   display: flex;
   flex-direction: column;

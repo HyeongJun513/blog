@@ -160,22 +160,6 @@ const App = () => {
 
 export default App;
 
-//모바일 UI 테스트
-{/* <Routes>
-<Route path="/" element={<Layout1024>{width}<List /></Layout1024>} />
-<Route path="post" element={<Layout1024><Post /></Layout1024>} />
-<Route path="list" element={<Layout1024><List /></Layout1024>} />
-<Route path="list/:id" element={<Layout1024><Detail /></Layout1024>} />
-<Route path="edit/:id" element={<Layout1024><Edit /></Layout1024>} />
-<Route path="signup" element={<Layout1024><SignUp /></Layout1024>} />
-<Route path="login" element={<Layout1024><Login /></Layout1024>} />
-<Route path="portfolio" element={<Layout1024><PortfolioHome /></Layout1024>} />
-<Route path="portfolio/post" element={<Layout1024><PortfolioPost /></Layout1024>} />
-<Route path="portfolio/edit" element={<Layout1024><PortfolioEdit /></Layout1024>} />
-<Route path="width" element={<div style={{marginTop:'10rem', fontSize:'3rem'}}><HeaderContainer><Header/></HeaderContainer>현재 width 값 : {width}</div>} />}
-<Route path="*" element={<ErrorPage />} />
-</Routes> */}
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -248,6 +232,7 @@ const ScrollableContent = styled.div`
   width: calc(80vw * 0.85); /* 전체 width 80% 중의 85% */
   overflow-y: auto; /* 세로 스크롤 활성화 */
   border-left: 1px solid lightgray;
+  min-height: calc(100vh - 15rem);
 
   // 창 크기별 디자인
   // @media (max-width: 1024px) and (min-width: 767px) {
