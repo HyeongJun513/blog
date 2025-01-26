@@ -267,7 +267,7 @@ const PortfolioHome = () => {
                           |
                           &nbsp; <ModalInfoIcon alt="person" src={`${process.env.PUBLIC_URL}/img/person.png`}/>{selectedPost?.personNum}</ModalContentInfo>
                           <hr />
-                          <ReactMarkdown>{selectedPost?.content}</ReactMarkdown>
+                          <ImageWrapper><ReactMarkdown>{selectedPost?.content}</ReactMarkdown></ImageWrapper>
                       </ModalContent>
 
                     </ReactModal>
@@ -589,7 +589,7 @@ const ProjectInfoIcon = styled.img`
     height: 1rem;
   }
 `;
-//1300, 1024, 800, 600
+
 const ModalHeaderTitle = styled.p`
   color: white;
   font-size: 1.5rem;
@@ -686,6 +686,13 @@ const ModalEditButton = styled.button`
   }
   @media (max-width: 600px) {
     font-size: 1rem;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  img {
+    max-width: 100%; /* 이미지가 화면 폭에 맞게 조정 */
+    height: auto;   /* 이미지 비율 유지 */
   }
 `;
 

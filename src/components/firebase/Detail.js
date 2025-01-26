@@ -393,6 +393,11 @@ const PostContent = styled.p`
   font-family: "Noto Sans KR", serif;
   font-style: normal;
 
+  img {
+    max-width: 100%; /* 이미지가 화면 폭에 맞게 조정 */
+    height: auto;   /* 이미지 비율 유지 */
+  }
+
   @media (max-width: 1024px) {
     font-size: 1rem;
   }
