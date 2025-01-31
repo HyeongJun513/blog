@@ -1,4 +1,4 @@
-# <img src="https://hyeongjun513.github.io/blog/favicon.ico" width="35" height="35"/>콘스의 개발 블로그
+# <img src="https://hyeongjun513.github.io/blog/favicon.ico" width="40" height="40"/> 콘스의 개발 블로그
 
 ## :bulb:프로젝트 소개
 ![MainScreen](https://firebasestorage.googleapis.com/v0/b/parkdevblog.firebasestorage.app/o/portfolio%2FBlogHome.png?alt=media&token=0aa13b77-5541-4dc5-a4d9-04bea56b94d4)
@@ -31,7 +31,7 @@ React와 Firebase, Github Pages를 이용하여 제작하였습니다. <br>
 ### 모바일 UI
 ![MobileScreen](https://firebasestorage.googleapis.com/v0/b/parkdevblog.firebasestorage.app/o/portfolio%2FBlogMobile.png?alt=media&token=c1b9db99-3a3c-47e3-a8a2-dd3c282aa1d2)
 
-## :mag:웹 컴포넌트 디자인인
+## :mag:웹 컴포넌트 디자인
 ### - 와이어 프레임
 ![Wirefram](https://firebasestorage.googleapis.com/v0/b/parkdevblog.firebasestorage.app/o/portfolio%2FBlogWireframing.png?alt=media&token=c279715d-dc96-47a3-bd08-3effec15fbda)
 - 상단의 헤더와 좌측의 사이드는 스크롤 고정
