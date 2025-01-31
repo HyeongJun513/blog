@@ -1,4 +1,4 @@
-# ![BlogIcon](https://hyeongjun513.github.io/blog/favicon.ico){: width="100" height="100"}콘스의 개발 블로그
+# <img src="[BlogIcon](https://hyeongjun513.github.io/blog/favicon.ico)" width="100" height="100"/>콘스의 개발 블로그
 
 ## :bulb:프로젝트 소개
 ![MainScreen](https://firebasestorage.googleapis.com/v0/b/parkdevblog.firebasestorage.app/o/portfolio%2FBlogHome.png?alt=media&token=0aa13b77-5541-4dc5-a4d9-04bea56b94d4)
