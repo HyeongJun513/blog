@@ -1,12 +1,12 @@
-# ![BlogIcon](https://hyeongjun513.github.io/blog/favicon.ico)콘스의 개발 블로그
+# ![BlogIcon](https://hyeongjun513.github.io/blog/favicon.ico){: width="100" height="100"}콘스의 개발 블로그
 
 ## :bulb:프로젝트 소개
 ![MainScreen](https://firebasestorage.googleapis.com/v0/b/parkdevblog.firebasestorage.app/o/portfolio%2FBlogHome.png?alt=media&token=0aa13b77-5541-4dc5-a4d9-04bea56b94d4)
 
 **프로젝트 기간** : 2024.12 ~ 2025.01<br>
 **인원** : 1인 <br>
-공부 및 기록을 위해 직접 제작한 개인 블로그로
-React와 Firebase, Github Pages를 이용하여 제작되었습니다. <br>
+공부 및 기록을 위해 직접 제작한 개인 블로그로,
+React와 Firebase, Github Pages를 이용하여 제작하였습니다. <br>
 **배포** : [블로그](https://hyeongjun513.github.io/blog)
 
 ## :clipboard:기술스택
